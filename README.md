@@ -51,7 +51,7 @@ start cmsc330_study_guide.html  # Windows
 # or double-click the file in your file explorer
 ```
 
-Or view it directly on GitHub Pages if enabled for this repository.
+Or view it directly on the Render link listed at the top of this page.
 
 ---
 
