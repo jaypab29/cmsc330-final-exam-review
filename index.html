@@ -1,0 +1,3577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CMSC330 Final Exam Study Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0e1a;
+  --surface: #111827;
+  --surface2: #1a2236;
+  --border: #2a3a5c;
+  --accent: #4fffb0;
+  --accent2: #ff6b6b;
+  --accent3: #ffd93d;
+  --accent4: #6bcbff;
+  --text: #e8edf5;
+  --muted: #7a8fad;
+  --code-bg: #0d1117;
+  --green: #4fffb0;
+  --red: #ff6b6b;
+  --yellow: #ffd93d;
+  --blue: #6bcbff;
+  --purple: #c084fc;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+/* SIDEBAR */
+#sidebar {
+  position: fixed;
+  left: 0; top: 0;
+  width: 260px;
+  height: 100vh;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  z-index: 100;
+  transition: transform 0.3s ease;
+}
+
+#sidebar-header {
+  padding: 20px 16px 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+#sidebar-header h2 {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 2px;
+}
+#sidebar-header p {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.nav-section {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.nav-section-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px 4px;
+}
+
+.nav-item {
+  display: block;
+  padding: 7px 16px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  transition: all 0.15s;
+  cursor: pointer;
+  border-left: 3px solid transparent;
+}
+.nav-item:hover, .nav-item.active {
+  background: var(--surface2);
+  border-left-color: var(--accent);
+  color: var(--accent);
+}
+
+/* MAIN CONTENT */
+#main {
+  margin-left: 260px;
+  min-height: 100vh;
+}
+
+/* HERO */
+#hero {
+  background: linear-gradient(135deg, #0a0e1a 0%, #0d1a2e 50%, #0a0e1a 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 60px 60px 50px;
+  position: relative;
+  overflow: hidden;
+}
+
+#hero::before {
+  content: '';
+  position: absolute;
+  top: -100px; right: -100px;
+  width: 500px; height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(79,255,176,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+#hero .tag {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 3px 10px;
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+#hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 48px;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+#hero h1 span { color: var(--accent); }
+
+#hero p {
+  color: var(--muted);
+  font-size: 16px;
+  max-width: 600px;
+  margin-bottom: 24px;
+}
+
+.topic-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.pill {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  border: 1px solid;
+}
+.pill.green { color: var(--green); border-color: rgba(79,255,176,0.3); background: rgba(79,255,176,0.06); }
+.pill.red { color: var(--red); border-color: rgba(255,107,107,0.3); background: rgba(255,107,107,0.06); }
+.pill.yellow { color: var(--yellow); border-color: rgba(255,217,61,0.3); background: rgba(255,217,61,0.06); }
+.pill.blue { color: var(--blue); border-color: rgba(107,203,255,0.3); background: rgba(107,203,255,0.06); }
+.pill.purple { color: var(--purple); border-color: rgba(192,132,252,0.3); background: rgba(192,132,252,0.06); }
+
+/* CONTENT SECTIONS */
+.content-section {
+  padding: 50px 60px;
+  border-bottom: 1px solid var(--border);
+  display: none;
+}
+.content-section.active { display: block; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.section-icon {
+  width: 44px; height: 44px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.section-header h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--text);
+}
+
+.section-header .section-num {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+}
+
+.card h3 {
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card p, .card li {
+  color: #b8c8d8;
+  font-size: 14px;
+  line-height: 1.75;
+}
+
+.card ul { padding-left: 20px; }
+.card ul li { margin-bottom: 4px; }
+
+/* CODE EDITOR */
+.code-editor {
+  background: var(--code-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.editor-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 16px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+}
+
+.editor-dots {
+  display: flex;
+  gap: 6px;
+}
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot.red { background: #ff5f57; }
+.dot.yellow { background: #febc2e; }
+.dot.green { background: #28c840; }
+
+.editor-lang {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--muted);
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn {
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  padding: 5px 12px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.15s;
+  letter-spacing: 0.05em;
+}
+
+.btn-run {
+  background: var(--accent);
+  color: #000;
+}
+.btn-run:hover { background: #3ae09e; }
+
+.btn-reset {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--muted);
+}
+.btn-reset:hover { border-color: var(--muted); color: var(--text); }
+
+.code-area {
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: #e6edf3;
+  background: var(--code-bg);
+  border: none;
+  width: 100%;
+  min-height: 120px;
+  resize: vertical;
+  outline: none;
+  line-height: 1.6;
+  tab-size: 2;
+}
+
+.output-area {
+  border-top: 1px solid var(--border);
+  padding: 12px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--green);
+  background: #070b12;
+  min-height: 40px;
+  white-space: pre-wrap;
+}
+
+.output-label {
+  font-size: 10px;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 6px 16px;
+  background: #070b12;
+  border-top: 1px solid var(--border);
+}
+
+/* DIAGRAM STEPPER */
+.diagram-stepper {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+.stepper-header {
+  padding: 14px 20px;
+  background: var(--surface2);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.stepper-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent);
+}
+
+.stepper-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.stepper-counter {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.btn-step {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  padding: 5px 14px;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-step:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); }
+.btn-step:disabled { opacity: 0.3; cursor: not-allowed; }
+
+.stepper-body {
+  padding: 24px;
+}
+
+.step-description {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent);
+  padding: 12px 16px;
+  margin-top: 16px;
+  border-radius: 0 4px 4px 0;
+  font-size: 14px;
+  color: var(--text);
+}
+
+.step-description strong { color: var(--accent); }
+
+/* SVG DIAGRAMS */
+svg text { font-family: 'IBM Plex Sans', sans-serif; }
+
+/* TABLE */
+.info-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 16px 0;
+  font-size: 13px;
+}
+.info-table th {
+  background: var(--surface2);
+  padding: 10px 14px;
+  text-align: left;
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+}
+.info-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border);
+  color: #b8c8d8;
+  vertical-align: top;
+}
+.info-table tr:hover td { background: rgba(255,255,255,0.02); }
+.info-table code {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent3);
+  background: var(--code-bg);
+  padding: 1px 6px;
+  border-radius: 3px;
+}
+
+/* INLINE CODE */
+code {
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: var(--accent3);
+  background: var(--code-bg);
+  padding: 2px 6px;
+  border-radius: 3px;
+  border: 1px solid var(--border);
+}
+
+/* CHEAT SHEET */
+
+.cheat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+@media (max-width: 1000px) {
+  .cheat-grid { grid-template-columns: 1fr; }
+}
+
+.cheat-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.cheat-card-header {
+  background: var(--surface2);
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--border);
+  font-family: 'Space Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.cheat-card pre {
+  padding: 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  color: #e6edf3;
+  overflow-x: auto;
+  line-height: 1.7;
+}
+
+/* QUIZ */
+.quiz-question {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+.quiz-question p {
+  font-size: 14px;
+  margin-bottom: 14px;
+  color: var(--text);
+  font-weight: 500;
+}
+.quiz-option {
+  display: block;
+  padding: 8px 14px;
+  margin: 6px 0;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-size: 13px;
+  color: var(--text);
+  background: var(--code-bg);
+}
+.quiz-option:hover { border-color: var(--blue); color: var(--blue); }
+.quiz-option.correct { border-color: var(--green) !important; color: var(--green) !important; background: rgba(79,255,176,0.06) !important; }
+.quiz-option.wrong { border-color: var(--red) !important; color: var(--red) !important; background: rgba(255,107,107,0.06) !important; }
+.quiz-option.revealed { border-color: var(--yellow) !important; color: var(--yellow) !important; background: rgba(255,217,61,0.06) !important; }
+.quiz-feedback {
+  margin-top: 10px;
+  padding: 10px 14px;
+  border-radius: 4px;
+  font-size: 13px;
+  display: none;
+}
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: rgba(79,255,176,0.1); border: 1px solid var(--green); color: var(--green); }
+.quiz-feedback.wrong { background: rgba(255,107,107,0.1); border: 1px solid var(--red); color: var(--red); }
+
+/* HIGHLIGHT BOX */
+.highlight-box {
+  border-radius: 6px;
+  padding: 14px 18px;
+  margin: 14px 0;
+  font-size: 14px;
+}
+.highlight-box.warning { background: rgba(255,217,61,0.08); border: 1px solid rgba(255,217,61,0.3); color: var(--yellow); }
+.highlight-box.info { background: rgba(107,203,255,0.08); border: 1px solid rgba(107,203,255,0.3); color: var(--blue); }
+.highlight-box.tip { background: rgba(79,255,176,0.08); border: 1px solid rgba(79,255,176,0.3); color: var(--green); }
+.highlight-box.danger { background: rgba(255,107,107,0.08); border: 1px solid rgba(255,107,107,0.3); color: var(--red); }
+.highlight-box strong { font-weight: 700; }
+
+/* PROGRESS BAR */
+.progress-track {
+  width: 100%;
+  height: 3px;
+  background: var(--border);
+  position: fixed;
+  top: 0;
+  left: 260px;
+  width: calc(100% - 260px);
+  z-index: 200;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--blue));
+  transition: width 0.3s;
+}
+
+/* SEARCH BAR */
+#search-bar {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+#search-input {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 7px 12px;
+  color: var(--text);
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  outline: none;
+}
+#search-input:focus { border-color: var(--accent); }
+#search-input::placeholder { color: var(--muted); }
+
+/* MOBILE TOGGLE */
+#menu-toggle {
+  display: none;
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 48px; height: 48px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  z-index: 200;
+  font-size: 20px;
+  color: #000;
+}
+
+@media (max-width: 768px) {
+  #menu-toggle { display: flex; align-items: center; justify-content: center; }
+  #sidebar { transform: translateX(-100%); }
+  #sidebar.open { transform: translateX(0); }
+  #main { margin-left: 0; }
+  .progress-track { left: 0; width: 100%; }
+  #hero, .content-section { padding: 30px 24px; }
+  #hero h1 { font-size: 32px; }
+  .cheat-grid { grid-template-columns: 1fr; }
+}
+
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+@media (max-width: 900px) { .two-col { grid-template-columns: 1fr; } }
+
+/* LAMBDA CALC */
+.lambda-expr {
+  font-family: 'Space Mono', monospace;
+  font-size: 14px;
+  color: var(--accent3);
+  background: var(--code-bg);
+  padding: 12px 18px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  display: inline-block;
+  margin: 4px 0;
+}
+
+.rule-box {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  margin: 14px 0;
+}
+.rule-box .rule-premise {
+  padding: 10px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--blue);
+  border-bottom: 2px solid var(--border);
+  text-align: center;
+}
+.rule-box .rule-conclusion {
+  padding: 10px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 13px;
+  color: var(--text);
+  text-align: center;
+}
+
+.score-badge {
+  display: inline-block;
+  font-family: 'Space Mono', monospace;
+  font-size: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  margin-left: 8px;
+}
+</style>
+</head>
+<body>
+
+<div class="progress-track"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div id="sidebar-header">
+    <h2>CMSC330</h2>
+    <p>Final Exam Study Guide</p>
+  </div>
+  <div id="search-bar">
+    <input type="text" id="search-input" placeholder="Search topics..." oninput="filterNav(this.value)">
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Overview</div>
+    <a class="nav-item active" onclick="showSection('home')">🏠 Home</a>
+    <a class="nav-item" onclick="showSection('cheatsheet')">📋 Cheat Sheet</a>
+    <a class="nav-item" onclick="showSection('quiz')">🧠 Practice Quiz</a>
+  </div>
+  <div class="nav-section">
+    <div class="nav-section-title">Core Topics</div>
+    <div id="search-no-results" style="display:none;padding:10px 16px;font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;">No results found.</div>
+    <a class="nav-item" data-topic="regex" onclick="showSection('regex')">1. Regular Expressions</a>
+    <a class="nav-item" data-topic="fsm" onclick="showSection('fsm')">2. Finite State Machines</a>
+    <a class="nav-item" data-topic="grammar" onclick="showSection('grammar')">3. Grammars &amp; CFGs</a>
+    <a class="nav-item" data-topic="ocaml" onclick="showSection('ocaml')">4. OCaml Fundamentals</a>
+    <a class="nav-item" data-topic="hof" onclick="showSection('hof')">5. Higher-Order Functions</a>
+    <a class="nav-item" data-topic="lambda" onclick="showSection('lambda')">6. Lambda Calculus</a>
+    <a class="nav-item" data-topic="opsemantics" onclick="showSection('opsemantics')">7. Operational Semantics</a>
+    <a class="nav-item" data-topic="types" onclick="showSection('types')">8. Type Systems</a>
+    <a class="nav-item" data-topic="rust" onclick="showSection('rust')">9. Rust &amp; Ownership</a>
+    <a class="nav-item" data-topic="gc" onclick="showSection('gc')">10. Garbage Collection</a>
+    <a class="nav-item" data-topic="interp" onclick="showSection('interp')">11. Interpreters &amp; Compilers</a>
+    <a class="nav-item" data-topic="pbt" onclick="showSection('pbt')">12. Property-Based Testing</a>
+  </div>
+</nav>
+
+<button id="menu-toggle" onclick="toggleSidebar()">☰</button>
+
+<!-- MAIN CONTENT -->
+<div id="main">
+
+<!-- HOME -->
+<section id="home" class="content-section active" style="padding:0;">
+  <div id="hero">
+    <div class="tag">UMD · CMSC330</div>
+    <h1>Organization of<br><span>Programming Languages</span></h1>
+    <p>Interactive study guide for your Final Exam — with live code editors, step-by-step diagrams, a cheat sheet, and a practice quiz.</p>
+    <div class="topic-pills">
+      <span class="pill green">Regex &amp; FSMs</span>
+      <span class="pill blue">CFGs &amp; Parsing</span>
+      <span class="pill yellow">OCaml</span>
+      <span class="pill red">Lambda Calculus</span>
+      <span class="pill purple">Rust Ownership</span>
+      <span class="pill green">Type Systems</span>
+      <span class="pill blue">Garbage Collection</span>
+      <span class="pill yellow">Interpreters</span>
+    </div>
+  </div>
+  <div style="padding:40px 60px;">
+    <div class="two-col">
+      <div class="card">
+        <h3>📊 What to Expect on the Exam</h3>
+        <p>Based on past exams (Fall 2023, Spring 2024, Spring 2025), each exam includes:</p>
+        <ul style="margin-top:10px;">
+          <li><strong style="color:var(--accent)">True/False concepts</strong> — language properties, Turing completeness, type systems</li>
+          <li><strong style="color:var(--accent)">Regex</strong> — matching strings, writing patterns</li>
+          <li><strong style="color:var(--accent)">FSM / NFA→DFA</strong> — subset construction algorithm</li>
+          <li><strong style="color:var(--accent)">OCaml typing &amp; evaluation</strong> — type inference, pattern matching</li>
+          <li><strong style="color:var(--accent)">Lambda calculus</strong> — beta reduction, alpha equivalence, free variables</li>
+          <li><strong style="color:var(--accent)">Operational semantics</strong> — proof trees</li>
+          <li><strong style="color:var(--accent)">Rust ownership</strong> — borrow checker errors, lifetimes</li>
+          <li><strong style="color:var(--accent)">OCaml coding</strong> — recursive functions, trees, lists</li>
+          <li><strong style="color:var(--accent)">Property-Based Testing</strong> — generators, relations</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>💡 How to Use This Guide</h3>
+        <ul>
+          <li>Click any <strong style="color:var(--accent)">topic</strong> in the sidebar to jump to it</li>
+          <li>Use the <strong style="color:var(--accent)">live editors</strong> to run and experiment with code</li>
+          <li>Step through <strong style="color:var(--accent)">interactive diagrams</strong> to understand algorithms</li>
+          <li>Hit the <strong style="color:var(--accent)">Cheat Sheet</strong> for a quick reference before the exam</li>
+          <li>Test yourself with the <strong style="color:var(--accent)">Practice Quiz</strong></li>
+        </ul>
+        <div class="highlight-box tip" style="margin-top:14px;">
+          <strong>Exam tip:</strong> The exam always has a reference sheet. Know how to USE the tools, not just memorize syntax.
+        </div>
+      </div>
+    </div>
+    <div class="highlight-box warning" style="margin-top:4px;">
+      <strong>⚠️ Common Exam Mistakes:</strong> Forgetting epsilon-closures in NFA→DFA, mixing up free/bound variables in lambda calc, and OCaml type errors from inconsistent branch types.
+    </div>
+  </div>
+</section>
+
+<!-- REGEX -->
+<section id="regex" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,255,176,0.1);">🔍</div>
+    <div>
+      <div class="section-num">Topic 1</div>
+      <h2>Regular Expressions</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>What is a Regular Expression?</h3>
+    <p>A regular expression (regex) is a pattern that describes a <strong style="color:var(--text)">set of strings</strong>. Think of it as a language for describing languages. Every regex corresponds to a Finite State Machine (FSM).</p>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Regex Syntax Quick Reference</h3>
+  <table class="info-table">
+    <tr><th>Symbol</th><th>Meaning</th><th>Example</th></tr>
+    <tr><td><code>a</code></td><td>Matches the literal character 'a'</td><td><code>cat</code> matches "cat"</td></tr>
+    <tr><td><code>r*</code></td><td>Zero or more of r</td><td><code>ab*</code> matches "a", "ab", "abb"...</td></tr>
+    <tr><td><code>r+</code></td><td>One or more of r</td><td><code>ab+</code> matches "ab", "abb"... (not "a")</td></tr>
+    <tr><td><code>r?</code></td><td>Zero or one of r</td><td><code>ab?</code> matches "a" or "ab"</td></tr>
+    <tr><td><code>r1|r2</code></td><td>r1 OR r2</td><td><code>cat|dog</code> matches "cat" or "dog"</td></tr>
+    <tr><td><code>[abc]</code></td><td>Any char in the set</td><td><code>[aeiou]</code> matches any vowel</td></tr>
+    <tr><td><code>[a-z]</code></td><td>Any char in range</td><td><code>[0-9]</code> matches any digit</td></tr>
+    <tr><td><code>[^abc]</code></td><td>Any char NOT in set</td><td><code>[^aeiou]</code> matches any consonant</td></tr>
+    <tr><td><code>.</code></td><td>Any single character</td><td><code>c.t</code> matches "cat", "cot", "cut"</td></tr>
+    <tr><td><code>^</code></td><td>Start of string</td><td><code>^hello</code> matches strings starting with "hello"</td></tr>
+    <tr><td><code>$</code></td><td>End of string</td><td><code>world$</code> matches strings ending with "world"</td></tr>
+    <tr><td><code>{n}</code></td><td>Exactly n repetitions</td><td><code>a{3}</code> matches "aaa"</td></tr>
+    <tr><td><code>{m,n}</code></td><td>Between m and n repetitions</td><td><code>a{2,4}</code> matches "aa", "aaa", "aaaa"</td></tr>
+    <tr><td><code>(r)</code></td><td>Group (for precedence)</td><td><code>(ab)*</code> matches "", "ab", "abab"...</td></tr>
+  </table>
+
+  <div class="highlight-box info">
+    <strong>Precedence (highest to lowest):</strong> Kleene Star (*,+,?) → Concatenation → Alternation (|)
+    <br>So <code>ab*</code> means <code>a(b*)</code>, and <code>a|bc</code> means <code>a|(bc)</code>
+  </div>
+
+  <div class="highlight-box warning" style="margin-top:12px;">
+    <strong>Exam pattern from Spring 2024:</strong> Given <code>ls -lh</code> output like <code>drwxrwxrwx</code>, write a regex for permissions. Answer: <code>(d|-)(r|-)(w|-)(x|-)</code> repeated for 3 groups = <code>(d|-)((r|-)(w|-)(x|-)){3}</code>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Interactive Regex Tester</h3>
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">JavaScript Regex Tester</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runRegex()">▶ Test</button>
+        <button class="btn btn-reset" onclick="resetRegex()">↺ Reset</button>
+      </div>
+    </div>
+    <div style="padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <label style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);display:block;margin-bottom:6px;">REGEX PATTERN</label>
+        <input type="text" id="regex-pattern" value="L*DS|[OB]{2}" style="width:100%;background:var(--code-bg);border:1px solid var(--border);border-radius:4px;padding:8px 12px;color:var(--accent3);font-family:'Space Mono',monospace;font-size:13px;outline:none;">
+      </div>
+      <div>
+        <label style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);display:block;margin-bottom:6px;">TEST STRINGS (one per line)</label>
+        <textarea id="regex-test" style="width:100%;background:var(--code-bg);border:1px solid var(--border);border-radius:4px;padding:8px 12px;color:var(--text);font-family:'Space Mono',monospace;font-size:13px;outline:none;height:80px;resize:vertical;">DS
+OBOB
+DOL
+LSBB
+OB
+abc</textarea>
+      </div>
+    </div>
+    <div class="output-label">OUTPUT</div>
+    <div class="output-area" id="regex-output">Click "Test" to check matches...</div>
+  </div>
+  <div class="highlight-box info" style="margin-top:8px;font-size:13px;">
+    <strong>📝 Exam note (Fall 2023):</strong> The default pattern <code>L*DS|[OB]{2}</code> is taken directly from the exam.
+    &quot;OBOB&quot; does <em>not</em> match because <code>[OB]{2}</code> means <strong>exactly 2</strong> characters from {O,B} — not 4.
+    The correct full matches are only: <strong>DS</strong> and <strong>OB</strong>.
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>📝 Exam Strategy: Writing Regex from Examples</h3>
+    <p><strong style="color:var(--text)">Fall 2023 asked:</strong> Write regex for OCaml expressions binding a shape:<br>
+    Valid: <code>let x = Rect(10,2)</code> | <code>let y = Circ(1.23)</code></p>
+    <p style="margin-top:10px;"><strong style="color:var(--accent)">Approach:</strong></p>
+    <ul style="margin-top:6px;">
+      <li>Variable: <code>let [a-z][a-zA-Z0-9_]* =</code></li>
+      <li>Rect: <code>Rect\([0-9]+,[0-9]+\)</code></li>
+      <li>Circ: <code>Circ\([0-9]+\.[0-9]+\)</code></li>
+      <li>Combined: <code>let [a-z][a-zA-Z0-9_]* = (Rect\([0-9]+,[0-9]+\)|Circ\([0-9]+\.[0-9]+\))</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- FSM -->
+<section id="fsm" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(107,203,255,0.1);">⚙️</div>
+    <div>
+      <div class="section-num">Topic 2</div>
+      <h2>Finite State Machines</h2>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>FSM Components</h3>
+      <ul>
+        <li><strong style="color:var(--text)">Q</strong> — Finite set of states</li>
+        <li><strong style="color:var(--text)">Σ</strong> — Alphabet (set of input symbols)</li>
+        <li><strong style="color:var(--text)">δ</strong> — Transition function</li>
+        <li><strong style="color:var(--text)">q₀</strong> — Start state</li>
+        <li><strong style="color:var(--text)">F</strong> — Set of accepting (final) states</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>DFA vs NFA</h3>
+      <ul>
+        <li><strong style="color:var(--green)">DFA</strong>: Each state has exactly one transition per symbol. Deterministic.</li>
+        <li><strong style="color:var(--yellow)">NFA</strong>: States can have multiple transitions per symbol, AND epsilon (ε) transitions (free moves without reading input).</li>
+        <li>Both recognize the same languages (regular languages)</li>
+        <li>Every NFA can be converted to a DFA</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- NFA to DFA Stepper -->
+  <div class="diagram-stepper">
+    <div class="stepper-header">
+      <span class="stepper-title">🔄 NFA → DFA: Subset Construction Algorithm (Step-by-Step)</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="fsm-counter">Step 1 / 7</span>
+        <button class="btn-step" id="fsm-prev" onclick="fsmStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="fsm-next" onclick="fsmStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <svg id="fsm-svg" viewBox="0 0 700 280" style="width:100%;height:220px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);">
+        <!-- NFA states and transitions drawn by JS -->
+      </svg>
+      <div class="step-description" id="fsm-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>🔑 Subset Construction — The Algorithm</h3>
+    <ol style="padding-left:20px;color:#b8c8d8;font-size:14px;line-height:2;">
+      <li>Start: compute <strong style="color:var(--accent)">ε-closure(q₀)</strong> — all states reachable via ε from start</li>
+      <li>This set of NFA states becomes <strong style="color:var(--accent)">the first DFA state</strong></li>
+      <li>For each DFA state S and each symbol a: compute <strong style="color:var(--accent)">ε-closure(move(S, a))</strong></li>
+      <li>This gives you a new DFA state. Add it to the worklist if not seen</li>
+      <li>A DFA state is <strong style="color:var(--accent)">accepting</strong> if it contains ANY NFA accepting state</li>
+      <li>Repeat until no new DFA states</li>
+    </ol>
+  </div>
+
+  <div class="highlight-box warning">
+    <strong>Exam tip:</strong> On NFA→DFA problems, always show your epsilon-closure calculations. The exam from Spring 2025 and Fall 2023 both had NFA→DFA worth 10-15 points. A "garbage" (dead/trap) state must be added if no transitions exist.
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Practice: NFA → DFA by Hand</h3>
+    <p style="color:#b8c8d8;font-size:14px;">Given NFA: States {0,1,2,3}, alphabet {a,b,c}, start=0, accept={3}</p>
+    <p style="color:#b8c8d8;font-size:14px;margin-top:8px;">Transitions: 0→1 on a, 1→2 on ε, 2→3 on b, 0→3 on a</p>
+    <div class="highlight-box info" style="margin-top:10px;">
+      <strong>Step 1:</strong> ε-closure({0}) = {0} (no ε from 0)<br>
+      <strong>Step 2:</strong> move({0}, a) = {1,3}; ε-closure({1,3}) = {1,2,3} (ε from 1→2)<br>
+      <strong>Step 3:</strong> State {1,2,3} is accepting (contains 3)!<br>
+      <strong>Step 4:</strong> move({1,2,3}, b) = {3}; ε-closure({3}) = {3} → accepting state
+    </div>
+  </div>
+</section>
+
+<!-- GRAMMARS -->
+<section id="grammar" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,217,61,0.1);">📝</div>
+    <div>
+      <div class="section-num">Topic 3</div>
+      <h2>Context-Free Grammars</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Why CFGs? Regular Expressions Aren't Enough</h3>
+    <p>Regular expressions can't describe <strong style="color:var(--text)">nested or recursive structures</strong>. For example, matching balanced parentheses <code>((()))</code> requires a CFG. Programming languages have recursive syntax — functions inside functions, nested expressions — so they need CFGs.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>CFG Components</h3>
+      <ul>
+        <li><strong style="color:var(--text)">Terminals</strong> — actual symbols (a, b, 0, +, etc.)</li>
+        <li><strong style="color:var(--text)">Non-terminals</strong> — placeholders like S, E, N</li>
+        <li><strong style="color:var(--text)">Productions</strong> — rules like S → aSb | ε</li>
+        <li><strong style="color:var(--text)">Start symbol</strong> — usually S</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Derivation</h3>
+      <p>A string is "in the language" if you can derive it from the start symbol by repeatedly applying production rules.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent3);margin-top:10px;line-height:2;">
+        S → aS → aaS → aaε → aa
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">CFG Parse Tree Stepper</h3>
+  <div class="diagram-stepper">
+    <div class="stepper-header">
+      <span class="stepper-title">📊 Parsing "3 + 4 * 2" with a Grammar</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="cfg-counter">Step 1 / 5</span>
+        <button class="btn-step" id="cfg-prev" onclick="cfgStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="cfg-next" onclick="cfgStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <svg id="cfg-svg" viewBox="0 0 700 260" style="width:100%;height:220px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);"></svg>
+      <div class="step-description" id="cfg-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Ambiguity in Grammars</h3>
+    <p>A grammar is <strong style="color:var(--red)">ambiguous</strong> if a string has more than one parse tree (or leftmost derivation). This is bad for programming languages — the meaning should be unambiguous.</p>
+    <div class="highlight-box warning" style="margin-top:10px;">
+      To fix ambiguity: add precedence rules (higher-precedence operations are deeper in the tree), or add extra non-terminals to enforce structure.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 Exam Pattern: CFG for a Given Language</h3>
+    <p>Spring 2024 asked: Write a CFG for strings accepted by an NFA over {a,b}.</p>
+    <p style="margin-top:8px;color:#b8c8d8;">Key insight: Each NFA state → one non-terminal. Transitions → productions. Accepting states → ε production.</p>
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent3);margin-top:10px;line-height:2;">
+      State 0 →start: S₀ → aS₁ | bS₀ | ...<br>
+      Accepting state: S₂ → ε | ...
+    </div>
+  </div>
+</section>
+
+<!-- OCAML -->
+<section id="ocaml" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,107,0.1);">🐪</div>
+    <div>
+      <div class="section-num">Topic 4</div>
+      <h2>OCaml Fundamentals</h2>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Key Properties of OCaml</h3>
+      <ul>
+        <li><strong style="color:var(--green)">Statically typed</strong> — types checked at compile time</li>
+        <li><strong style="color:var(--green)">Type inference</strong> — compiler infers types (NOT dynamically typed!)</li>
+        <li><strong style="color:var(--green)">Immutable by default</strong> — variables can't be changed after binding</li>
+        <li><strong style="color:var(--green)">Functional</strong> — functions are first-class values</li>
+        <li><strong style="color:var(--green)">Compiled</strong> — uses <code>ocamlc</code> or <code>dune</code></li>
+        <li><strong style="color:var(--red)">NOT dynamically typed</strong> despite type inference!</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>⚠️ Common True/False Traps</h3>
+      <ul>
+        <li><strong style="color:var(--red)">FALSE:</strong> "OCaml is dynamically typed because it uses type inference" — Inference ≠ Dynamic typing</li>
+        <li><strong style="color:var(--red)">FALSE:</strong> "Anonymous functions can't be recursive" — (they can with <code>let rec</code>)</li>
+        <li><strong style="color:var(--green)">TRUE:</strong> <code>(fun x → x+1)</code> is alpha-equivalent to <code>(fun y → y+1)</code></li>
+        <li><strong style="color:var(--green)">TRUE:</strong> <code>map</code> can always be replaced by <code>fold</code></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Live OCaml Simulator</h3>
+  <div class="highlight-box info" style="margin-bottom:10px;">Note: This simulates OCaml evaluation. Edit the code and click Run to see output.</div>
+
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">OCaml (Simulated)</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runOCaml()">▶ Run</button>
+        <button class="btn btn-reset" onclick="resetOCaml()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="ocaml-code">
+(* OCaml Basics: Let expressions, recursion, pattern matching *)
+
+(* Simple let binding *)
+let x = 3 + 4
+
+(* Function definition: area has type int -> int -> int *)
+let area l w = l * w
+
+(* if expression: BOTH branches must return same type *)
+let abs_val n = if n >= 0 then n else -n
+
+(* Recursive function *)
+let rec factorial n =
+  if n = 0 then 1
+  else n * factorial (n - 1)
+
+(* Pattern matching on a list *)
+let rec sum lst = match lst with
+  | [] -> 0
+  | x :: xs -> x + sum xs
+
+(* Variant type example *)
+(* type shape = Rect of int * int | Circ of float *)
+    </textarea>
+    <div class="output-label">OUTPUT (Simulated)</div>
+    <div class="output-area" id="ocaml-output">Press ▶ Run to evaluate</div>
+  </div>
+
+  <div class="two-col" style="margin-top:20px;">
+    <div class="card">
+      <h3>Pattern Matching — Exam Staple</h3>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;">
+        <span style="color:var(--muted)">(* match on list *)</span><br>
+        <span style="color:var(--blue)">match</span> lst <span style="color:var(--blue)">with</span><br>
+        | [] -> 0<br>
+        | x :: xs -> x + ...
+      </div>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;margin-top:12px;">
+        <span style="color:var(--muted)">(* match on variant *)</span><br>
+        <span style="color:var(--blue)">match</span> shape <span style="color:var(--blue)">with</span><br>
+        | Rect(l,w) -> l * w<br>
+        | Circ(r) -> 3.14 *. r *. r
+      </div>
+    </div>
+    <div class="card">
+      <h3>Type Inference Rules</h3>
+      <ul>
+        <li><code>+</code> requires <code>int</code> on both sides</li>
+        <li><code>+.</code> requires <code>float</code> on both sides</li>
+        <li><code>if</code> branches must have <strong>same type</strong></li>
+        <li>List elements must all be <strong>same type</strong></li>
+        <li>Polymorphic: <code>'a list -> 'a</code></li>
+      </ul>
+      <div class="highlight-box danger" style="margin-top:10px;font-size:13px;">
+        <code>if 1 then 3+5 else 'a'</code> ← TYPE ERROR (int vs char)
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Type Inference Practice</h3>
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">OCaml — Type Inference</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runTypeCheck()">▶ Infer Type</button>
+        <button class="btn btn-reset" onclick="resetTypeCheck()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="typecheck-code" style="min-height:80px;">
+fun x ->
+  let (a, b) = x in
+  fun y ->
+    let a = (a+1, b > true) in
+    (a :: y)
+    </textarea>
+    <div class="output-label">INFERRED TYPE</div>
+    <div class="output-area" id="typecheck-output">Enter OCaml expression and click "Infer Type"</div>
+  </div>
+</section>
+
+<!-- HIGHER ORDER FUNCTIONS -->
+<section id="hof" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(192,132,252,0.1);">⚡</div>
+    <div>
+      <div class="section-num">Topic 5</div>
+      <h2>Higher-Order Functions</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>What Makes a Function "Higher Order"?</h3>
+    <p>A higher-order function is one that <strong style="color:var(--text)">takes a function as input</strong> and/or <strong style="color:var(--text)">returns a function as output</strong>. In OCaml, functions are first-class values — they can be stored, passed, and returned like any other value.</p>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>map — Transform every element</h3>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;">
+        <span style="color:var(--muted)">(* type: ('a->'b) -> 'a list -> 'b list *)</span><br>
+        <span style="color:var(--blue)">let rec</span> map f l = <span style="color:var(--blue)">match</span> l <span style="color:var(--blue)">with</span><br>
+        | [] -> []<br>
+        | x::xs -> (f x) :: (map f xs)<br><br>
+        <span style="color:var(--muted)">(* Example: *)</span><br>
+        map (fun x -> x*2) [1;2;3]<br>
+        <span style="color:var(--green)">(* = [2;4;6] *)</span>
+      </div>
+    </div>
+    <div class="card">
+      <h3>fold_left — Accumulate from left</h3>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;">
+        <span style="color:var(--muted)">(* type: ('a->'b->'a) -> 'a -> 'b list -> 'a *)</span><br>
+        <span style="color:var(--blue)">let rec</span> fold_left f a l = <span style="color:var(--blue)">match</span> l <span style="color:var(--blue)">with</span><br>
+        | [] -> a<br>
+        | x::xs -> fold_left f (f a x) xs<br><br>
+        <span style="color:var(--muted)">(* Sum: *)</span><br>
+        fold_left (+) 0 [1;2;3]<br>
+        <span style="color:var(--green)">(* = 6 *)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:0;">
+    <h3>fold_right — Accumulate from right</h3>
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;">
+      <span style="color:var(--muted)">(* type: ('a->'b->'b) -> 'a list -> 'b -> 'b *)</span><br>
+      <span style="color:var(--blue)">let rec</span> fold_right f l a = <span style="color:var(--blue)">match</span> l <span style="color:var(--blue)">with</span><br>
+      | [] -> a<br>
+      | x::xs -> f x (fold_right f xs a)<br><br>
+      fold_right (fun x acc -> x :: acc) [1;2;3] [] <span style="color:var(--green)">(* = [1;2;3] — essentially copies the list *)</span>
+    </div>
+  </div>
+
+  <div class="highlight-box tip">
+    <strong>Exam tip:</strong> "Anywhere we use map, we could use fold instead" — TRUE. Fold is more general. map is syntactic sugar.
+    <br><code>map f lst = fold_right (fun x acc -> (f x) :: acc) lst []</code>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Try Higher-Order Functions</h3>
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">OCaml HOF Playground</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runHOF()">▶ Run</button>
+        <button class="btn btn-reset" onclick="resetHOF()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="hof-code">
+(* Try experimenting with higher-order functions *)
+
+(* map: double every element *)
+let doubled = List.map (fun x -> x * 2) [1; 2; 3; 4; 5]
+(* Result: [2; 4; 6; 8; 10] *)
+
+(* fold_left: sum a list *)
+let total = List.fold_left (fun acc x -> acc + x) 0 [1; 2; 3; 4; 5]
+(* Result: 15 *)
+
+(* filter: keep only evens *)
+let evens = List.filter (fun x -> x mod 2 = 0) [1; 2; 3; 4; 5; 6]
+(* Result: [2; 4; 6] *)
+
+(* Composing: sum of squares *)
+let sum_squares lst =
+  List.fold_left (+) 0 (List.map (fun x -> x * x) lst)
+(* sum_squares [1;2;3] = 14 *)
+    </textarea>
+    <div class="output-label">OUTPUT</div>
+    <div class="output-area" id="hof-output">Press ▶ Run to evaluate</div>
+  </div>
+</section>
+
+<!-- LAMBDA CALCULUS -->
+<section id="lambda" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,217,61,0.1);">λ</div>
+    <div>
+      <div class="section-num">Topic 6</div>
+      <h2>Lambda Calculus</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Grammar of Lambda Calculus</h3>
+    <p>Lambda Calculus is a tiny but Turing-complete language with just three forms:</p>
+    <div style="font-family:'Space Mono',monospace;font-size:15px;color:var(--accent3);margin:14px 0;line-height:2.2;background:var(--code-bg);padding:16px;border-radius:6px;border:1px solid var(--border);">
+      E → x &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--muted)">(variable)</span><br>
+      E → λx.E &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--muted)">(abstraction: function definition)</span><br>
+      E → E E &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--muted)">(application: function call)</span><br>
+      E → (E) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:var(--muted)">(grouping)</span>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Free vs Bound Variables</h3>
+      <p>A variable is <strong style="color:var(--green)">bound</strong> if it's inside a lambda that has it as a parameter. Otherwise it's <strong style="color:var(--red)">free</strong>.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;margin-top:12px;line-height:2;">
+        (λ<span style="color:var(--green)">x</span>.<span style="color:var(--green)">x</span> <span style="color:var(--red)">a</span>) <span style="color:var(--red)">b</span><br>
+        <span style="color:var(--green)">green = bound</span>, <span style="color:var(--red)">red = free</span>
+      </div>
+      <div class="highlight-box info" style="margin-top:10px;font-size:13px;">
+        In <code>(λx.(λx.xx)x)x(λy.yf)a</code><br>
+        Free variables: the outer <code>x</code>, <code>f</code>, <code>a</code>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Alpha Equivalence</h3>
+      <p>Two expressions are <strong style="color:var(--accent)">alpha-equivalent</strong> (α-equivalent) if they differ only in the names of bound variables. They're semantically identical.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;margin-top:12px;line-height:2;">
+        (λx.x) ≡ (λy.y) ≡ (λz.z)<br>
+        <span style="color:var(--green)">All alpha-equivalent!</span>
+      </div>
+      <div class="highlight-box warning" style="margin-top:10px;font-size:13px;">
+        (λx.xy) is NOT α-equiv to (λy.yy) — free variable changed!
+      </div>
+    </div>
+  </div>
+
+  <!-- Beta Reduction Stepper -->
+  <div class="diagram-stepper" style="margin-top:20px;">
+    <div class="stepper-header">
+      <span class="stepper-title">β-Reduction: (λx.x x)((λy.y) a) — Step by Step</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="lambda-counter">Step 1 / 5</span>
+        <button class="btn-step" id="lambda-prev" onclick="lambdaStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="lambda-next" onclick="lambdaStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body" id="lambda-body">
+      Loading...
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:20px;">
+    <div class="card">
+      <h3>Call-by-Name (Lazy) Evaluation</h3>
+      <p>Reduce the <strong style="color:var(--text)">outermost, leftmost</strong> redex first. Arguments are NOT evaluated before passing.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:#e6edf3;margin-top:10px;line-height:2;">
+        (λx.xx)((λy.yy)(λz.zz))<br>
+        <span style="color:var(--muted)">↓ reduce outermost first</span><br>
+        ((λy.yy)(λz.zz))((λy.yy)(λz.zz))
+      </div>
+    </div>
+    <div class="card">
+      <h3>Call-by-Value (Eager) Evaluation</h3>
+      <p>Reduce the <strong style="color:var(--text)">argument first</strong> before applying the function. The argument must be a value (lambda) before substituting.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:#e6edf3;margin-top:10px;line-height:2;">
+        (λx.xx)((λy.yy)(λz.zz))<br>
+        <span style="color:var(--muted)">↓ reduce argument first</span><br>
+        (λx.xx)((λz.zz)(λz.zz))<br>
+        <span style="color:var(--muted)">↓ reduce argument again</span><br>
+        (λx.xx)(λz.zz)
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:4px;">
+    <h3>Lambda Calculus β-Reduction Practice</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:12px;">Practice reducing these expressions — they appear directly on exams:</p>
+    <div id="lambda-practice-container">
+      <div style="margin-bottom:16px;">
+        <div style="font-family:'Space Mono',monospace;font-size:14px;color:var(--accent3);margin-bottom:8px;">((λx. (λy. y x)) y)(λx. x b)</div>
+        <button class="btn btn-step" onclick="showSolution('lc1')">Show Solution</button>
+        <div id="lc1" style="display:none;margin-top:8px;">
+          <div class="highlight-box info" style="font-family:'Space Mono',monospace;font-size:13px;line-height:2;">
+            1. ((λx.(λy.y x))y)(λx.x b)<br>
+            2. ← apply outer lambda: substitute y for x<br>
+            &nbsp;&nbsp; (λy.y y)(λx.x b) &nbsp;&nbsp;<span style="color:var(--muted)">// 'y' in body is now the free 'y'</span><br>
+            3. ← apply: substitute (λx.x b) for y<br>
+            &nbsp;&nbsp; (λx.x b)(λx.x b)<br>
+            4. ← apply: substitute (λx.x b) for x<br>
+            &nbsp;&nbsp; (λx.x b) b<br>
+            5. ← apply: substitute b for x<br>
+            &nbsp;&nbsp; <strong style="color:var(--green)">b b</strong> &nbsp;<span style="color:var(--muted)">(beta normal form)</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- OPERATIONAL SEMANTICS -->
+<section id="opsemantics" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(107,203,255,0.1);">⊢</div>
+    <div>
+      <div class="section-num">Topic 7</div>
+      <h2>Operational Semantics</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>What is Operational Semantics?</h3>
+    <p>Operational semantics gives <strong style="color:var(--text)">meaning to programs</strong> by describing how they execute, step by step. It's a formal way to prove what a program evaluates to. We write rules in the form:</p>
+    <div class="rule-box" style="max-width:400px;margin-top:14px;">
+      <div class="rule-premise">Premise₁ &nbsp;&nbsp;&nbsp; Premise₂</div>
+      <div class="rule-conclusion">Conclusion</div>
+    </div>
+    <p style="margin-top:10px;font-size:14px;color:#b8c8d8;">Read: "If the premises hold, then the conclusion holds."</p>
+  </div>
+
+  <div class="card">
+    <h3>Example Rules (from course notes)</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:12px;">For a language with numbers and the ? (plus) operator:</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Axiom (base case):</p>
+        <div class="rule-box">
+          <div class="rule-premise" style="color:var(--muted);font-size:12px;">(no premises needed)</div>
+          <div class="rule-conclusion">n ⇒ n</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:8px;">Addition rule:</p>
+        <div class="rule-box">
+          <div class="rule-premise">e1 ⇒ v1 &nbsp; e2 ⇒ v2 &nbsp; v3 = v1+v2</div>
+          <div class="rule-conclusion">e1 ? e2 ⇒ v3</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proof Tree Stepper -->
+  <div class="diagram-stepper" style="margin-top:20px;">
+    <div class="stepper-header">
+      <span class="stepper-title">🌲 Build a Proof Tree: len([1,2]) ⇒ 2</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="ops-counter">Step 1 / 6</span>
+        <button class="btn-step" id="ops-prev" onclick="opsStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="ops-next" onclick="opsStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <div id="ops-diagram" style="font-family:'Space Mono',monospace;font-size:13px;min-height:150px;"></div>
+      <div class="step-description" id="ops-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Operational Semantics & Evaluation Order</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:10px;">Spring 2024 asked: What does this print given different opsem rules for <code>&&</code>?</p>
+    <div class="highlight-box info" style="font-family:'Space Mono',monospace;font-size:13px;">
+      (let _ = print_string "a" in false) &amp;&amp; (let _ = print_string "b" in true)
+    </div>
+    <ul style="margin-top:12px;font-size:14px;color:#b8c8d8;">
+      <li>If left evaluates first: prints <strong style="color:var(--text)">"a"</strong> (short-circuit: false &amp;&amp; anything = false, b never evaluated)</li>
+      <li>If right evaluates first: prints <strong style="color:var(--text)">"b"</strong> then <strong style="color:var(--text)">"a"</strong></li>
+      <li>If both evaluate regardless: prints <strong style="color:var(--text)">"ab"</strong></li>
+    </ul>
+    <div class="highlight-box warning" style="margin-top:10px;">
+      The ORDER in the opsem rule tells you the evaluation order! Left premise = evaluated first.
+    </div>
+  </div>
+</section>
+
+<!-- TYPE SYSTEMS -->
+<section id="types" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(192,132,252,0.1);">🏷️</div>
+    <div>
+      <div class="section-num">Topic 8</div>
+      <h2>Type Systems</h2>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Static vs Dynamic Typing</h3>
+      <ul>
+        <li><strong style="color:var(--green)">Static</strong>: types checked at <em>compile time</em> (OCaml, Rust, Java)</li>
+        <li><strong style="color:var(--yellow)">Dynamic</strong>: types checked at <em>runtime</em> (Python, Ruby)</li>
+        <li>OCaml has <strong>type inference</strong> — compiler deduces types for you. This is STILL static typing.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Soundness vs Completeness</h3>
+      <ul>
+        <li><strong style="color:var(--green)">Sound</strong>: If the type checker says it's OK, it WILL run without type errors. (No false negatives)</li>
+        <li><strong style="color:var(--blue)">Complete</strong>: If a program is correct, the type checker accepts it. (No false positives)</li>
+        <li>Most type systems are sound but NOT complete. Rust is sound but rejects some safe programs.</li>
+        <li><strong style="color:var(--red)">Soundness does NOT imply completeness!</strong></li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Type Judgment Rules</h3>
+
+  <div class="card">
+    <h3>Reading Type Rules (Typing Context Γ)</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:14px;">Γ (gamma) is a typing context mapping variables to types. We write <strong style="color:var(--accent)">Γ ⊢ e : t</strong> to mean "in context Γ, expression e has type t".</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:6px;">Variable rule:</p>
+        <div class="rule-box">
+          <div class="rule-premise">Γ(x) = t</div>
+          <div class="rule-conclusion">Γ ⊢ x : t</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:6px;">If expression rule:</p>
+        <div class="rule-box">
+          <div class="rule-premise">Γ ⊢ e1 : bool &nbsp; Γ ⊢ e2 : t &nbsp; Γ ⊢ e3 : t</div>
+          <div class="rule-conclusion">Γ ⊢ if e1 then e2 else e3 : t</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:6px;">Function rule:</p>
+        <div class="rule-box">
+          <div class="rule-premise">Γ, x:t1 ⊢ e : t2</div>
+          <div class="rule-conclusion">Γ ⊢ (fun x -> e) : t1 -> t2</div>
+        </div>
+      </div>
+      <div>
+        <p style="font-size:12px;color:var(--muted);margin-bottom:6px;">Application rule:</p>
+        <div class="rule-box">
+          <div class="rule-premise">Γ ⊢ e1 : t1 -> t2 &nbsp; Γ ⊢ e2 : t1</div>
+          <div class="rule-conclusion">Γ ⊢ e1 e2 : t2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Type Inference Practice (from Exams)</h3>
+
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">OCaml Type Inference — Exam Problems</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runTypePractice()">▶ Check Type</button>
+        <button class="btn btn-reset" onclick="resetTypePractice()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="typepractice-code" style="min-height:100px;">
+(* From Spring 2024 & Spring 2025 Final Exams *)
+(* What is the type of this expression? *)
+fun x ->
+  let (a, b) = x in
+  fun y ->
+    let a = (a+1, b > true) in
+    (a :: y)
+    </textarea>
+    <div class="output-label">ANSWER & EXPLANATION</div>
+    <div class="output-area" id="typepractice-output">Press ▶ Check Type to see the answer</div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Rust Type System Notes</h3>
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;background:var(--code-bg);padding:16px;border-radius:6px;border:1px solid var(--border);">
+      <span style="color:var(--muted)">// if expression — both branches must return same type</span><br>
+      let a = if false {<br>
+      &nbsp;&nbsp;true > false  <span style="color:var(--muted)">// bool (no semicolon = expression)</span><br>
+      } else {<br>
+      &nbsp;&nbsp;false  <span style="color:var(--muted)">// bool</span><br>
+      };<br>
+      let b = true;<br>
+      (a, b)  <span style="color:var(--green)">// type: (bool, bool)</span>
+    </div>
+    <div class="highlight-box warning" style="margin-top:12px;font-size:13px;">
+      In Rust, a block ending with <code>;</code> returns <code>()</code> (unit), not the expression value. This is a common exam trap!
+    </div>
+  </div>
+</section>
+
+<!-- RUST OWNERSHIP -->
+<section id="rust" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,107,107,0.1);">🦀</div>
+    <div>
+      <div class="section-num">Topic 9</div>
+      <h2>Rust & Ownership</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Three Rules of Ownership</h3>
+    <ol style="padding-left:20px;color:#b8c8d8;font-size:14px;line-height:2.2;">
+      <li><strong style="color:var(--accent)">Every value has exactly one owner</strong></li>
+      <li><strong style="color:var(--accent)">There can only be one owner at a time</strong></li>
+      <li><strong style="color:var(--accent)">When the owner goes out of scope, the value is dropped (freed)</strong></li>
+    </ol>
+  </div>
+
+  <!-- Ownership Stepper -->
+  <div class="diagram-stepper">
+    <div class="stepper-header">
+      <span class="stepper-title">🦀 Rust Ownership: Move vs Borrow (Step-by-Step)</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="rust-counter">Step 1 / 6</span>
+        <button class="btn-step" id="rust-prev" onclick="rustStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="rust-next" onclick="rustStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <svg id="rust-svg" viewBox="0 0 700 200" style="width:100%;height:180px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);"></svg>
+      <div class="step-description" id="rust-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:20px;">
+    <div class="card">
+      <h3>Borrowing Rules</h3>
+      <ul>
+        <li>You can have <strong style="color:var(--green)">many immutable references</strong> (<code>&T</code>) at once</li>
+        <li>OR <strong style="color:var(--red)">exactly one mutable reference</strong> (<code>&mut T</code>)</li>
+        <li>NOT both at the same time</li>
+        <li>References must always be valid (no dangling pointers)</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>Copy vs Move</h3>
+      <ul>
+        <li><strong style="color:var(--blue)">Copy types</strong> (primitives: i32, bool, char, f64): assignment copies the value. Old variable still valid.</li>
+        <li><strong style="color:var(--yellow)">Move types</strong> (String, Vec, etc.): assignment MOVES ownership. Old variable becomes invalid.</li>
+      </ul>
+      <div class="highlight-box tip" style="margin-top:10px;font-size:13px;">
+        <code>let y = x;</code> on an i32 → copy (both valid)<br>
+        <code>let y = x;</code> on a String → move (x invalid!)
+      </div>
+    </div>
+  </div>
+
+  <h3 style="margin:24px 0 12px;color:var(--accent);font-family:'Space Mono',monospace;font-size:13px;letter-spacing:.05em;text-transform:uppercase;">Rust Ownership Code — Will it Compile?</h3>
+  <div class="code-editor">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">Rust Borrow Checker (Simulated)</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runRust()">▶ Compile Check</button>
+        <button class="btn btn-reset" onclick="resetRust()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="rust-code">
+fn main() {
+    // Example 1: This compiles! (i32 is Copy)
+    let x = 4;
+    let y = x;
+    println!("{x},{y}");  // both valid
+
+    // Example 2: Does this compile?
+    // let x = String::from("Hello");
+    // let y = x;  // x is MOVED
+    // println!("{x}");  // ERROR: x moved
+
+    // Example 3: Borrowing
+    // let mut x = String::from("Hello");
+    // let y = &x;   // immutable borrow
+    // x.push_str("!");  // ERROR: can't mutate while borrowed
+    // println!("{y}");
+}
+    </textarea>
+    <div class="output-label">BORROW CHECKER RESULT</div>
+    <div class="output-area" id="rust-output">Press ▶ Compile Check to analyze</div>
+  </div>
+
+  <div class="card" style="margin-top:20px;">
+    <h3>Lifetimes — The Concept</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:10px;">Lifetimes ensure references don't outlive the data they point to. The key insight:</p>
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;line-height:1.9;background:var(--code-bg);padding:14px;border-radius:6px;border:1px solid var(--border);">
+      fn longest&lt;'a&gt;(s1: &'a str, s2: &'a str) -> &'a str {<br>
+      &nbsp;&nbsp;<span style="color:var(--muted)">// 'a means: output lives at least as long as shorter of s1, s2</span><br>
+      &nbsp;&nbsp;if s1.len() > s2.len() { s1 } else { s2 }<br>
+      }
+    </div>
+    <div class="highlight-box warning" style="margin-top:10px;font-size:13px;">
+      <strong>Dangling reference example from Fall 2023:</strong> <code>fn append_one(v: &mut Vec&lt;&i32&gt;) { let n = 1; v.push(&n); }</code> — ERROR because <code>n</code> lives on the stack and is freed when the function returns, but the reference would outlive it.
+    </div>
+  </div>
+</section>
+
+<!-- GARBAGE COLLECTION -->
+<section id="gc" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(79,255,176,0.1);">🗑️</div>
+    <div>
+      <div class="section-num">Topic 10</div>
+      <h2>Garbage Collection</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Why Garbage Collection?</h3>
+    <p>When we allocate memory on the heap, someone has to free it. Manual management (C/C++) is error-prone (memory leaks, use-after-free). Garbage collection automates memory reclamation. There are two main algorithms tested:</p>
+  </div>
+
+  <!-- GC Stepper -->
+  <div class="diagram-stepper">
+    <div class="stepper-header">
+      <span class="stepper-title">🗑️ Reference Counting — Step-by-Step</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="gc-counter">Step 1 / 5</span>
+        <button class="btn-step" id="gc-prev" onclick="gcStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="gc-next" onclick="gcStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <svg id="gc-svg" viewBox="0 0 700 220" style="width:100%;height:200px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);"></svg>
+      <div class="step-description" id="gc-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="two-col" style="margin-top:20px;">
+    <div class="card">
+      <h3>Reference Counting</h3>
+      <p>Each heap object has a counter of how many pointers reference it. When count hits 0, the memory is freed.</p>
+      <div class="highlight-box danger" style="margin-top:10px;font-size:13px;">
+        <strong>Fatal flaw:</strong> Cannot handle <strong>cycles</strong>! If A → B → A, both counts stay ≥ 1 even when unreachable.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Mark and Sweep</h3>
+      <p>Two phases:</p>
+      <ol style="padding-left:18px;color:#b8c8d8;font-size:14px;line-height:2;">
+        <li><strong style="color:var(--accent)">Mark</strong>: Start from roots (stack), traverse all reachable objects and mark them</li>
+        <li><strong style="color:var(--accent)">Sweep</strong>: Go through all heap objects, free any that are NOT marked</li>
+      </ol>
+      <div class="highlight-box tip" style="margin-top:10px;font-size:13px;">
+        <strong>Handles cycles!</strong> Cyclic structures are freed if no path from any root reaches them.
+      </div>
+    </div>
+  </div>
+
+  <!-- Mark and Sweep Stepper -->
+  <div class="diagram-stepper" style="margin-top:20px;">
+    <div class="stepper-header">
+      <span class="stepper-title">🔍 Mark and Sweep — Step-by-Step</span>
+      <div class="stepper-controls">
+        <span class="stepper-counter" id="ms-counter">Step 1 / 5</span>
+        <button class="btn-step" id="ms-prev" onclick="msStep(-1)" disabled>← Prev</button>
+        <button class="btn-step" id="ms-next" onclick="msStep(1)">Next →</button>
+      </div>
+    </div>
+    <div class="stepper-body">
+      <svg id="ms-svg" viewBox="0 0 700 220" style="width:100%;height:200px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);"></svg>
+      <div class="step-description" id="ms-desc">Loading...</div>
+    </div>
+  </div>
+
+  <div class="highlight-box warning" style="margin-top:20px;">
+    <strong>Exam question from Spring 2024:</strong> "Which GC algorithm can clean up a cyclical linked list?" → <strong>Mark and Sweep</strong> (NOT reference counting)
+  </div>
+</section>
+
+<!-- INTERPRETERS & COMPILERS -->
+<section id="interp" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(107,203,255,0.1);">🔧</div>
+    <div>
+      <div class="section-num">Topic 11</div>
+      <h2>Interpreters &amp; Compilers</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Three Stages of Language Processing</h3>
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:14px 0;">
+      <div style="background:rgba(79,255,176,0.1);border:1px solid rgba(79,255,176,0.3);border-radius:6px;padding:12px 18px;text-align:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Stage 1</div>
+        <div style="font-size:16px;font-weight:600;color:var(--green);margin:4px 0;">Lexer</div>
+        <div style="font-size:12px;color:#b8c8d8;">Text → Tokens</div>
+      </div>
+      <div style="color:var(--muted);font-size:20px;">→</div>
+      <div style="background:rgba(107,203,255,0.1);border:1px solid rgba(107,203,255,0.3);border-radius:6px;padding:12px 18px;text-align:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Stage 2</div>
+        <div style="font-size:16px;font-weight:600;color:var(--blue);margin:4px 0;">Parser</div>
+        <div style="font-size:12px;color:#b8c8d8;">Tokens → AST</div>
+      </div>
+      <div style="color:var(--muted);font-size:20px;">→</div>
+      <div style="background:rgba(255,217,61,0.1);border:1px solid rgba(255,217,61,0.3);border-radius:6px;padding:12px 18px;text-align:center;">
+        <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;">Stage 3</div>
+        <div style="font-size:16px;font-weight:600;color:var(--yellow);margin:4px 0;">Evaluator</div>
+        <div style="font-size:12px;color:#b8c8d8;">AST → Value</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>Lexer (Tokenizer)</h3>
+      <p>Converts raw text into a list of <strong style="color:var(--text)">tokens</strong>. A token is a meaningful unit: keyword, number, operator, identifier.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:#e6edf3;margin-top:10px;line-height:1.9;">
+        "1 + 23" →<br>
+        [Num(1); Plus; Num(23)]
+      </div>
+      <div class="highlight-box info" style="margin-top:10px;font-size:13px;">
+        The lexer does NOT check grammar. It only checks that each word is a valid token.
+      </div>
+    </div>
+    <div class="card">
+      <h3>Parser</h3>
+      <p>Checks that the token list follows the <strong style="color:var(--text)">grammar</strong> (CFG) and builds an <strong style="color:var(--text)">Abstract Syntax Tree (AST)</strong>.</p>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:#e6edf3;margin-top:10px;line-height:1.9;">
+        [Num(1); Plus; Num(23)] →<br>
+        Add(Num 1, Num 23)
+      </div>
+      <div class="highlight-box warning" style="margin-top:10px;font-size:13px;">
+        Parse errors = GRAMMATICALLY invalid (right tokens, wrong order)
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>📝 Exam Pattern: At What Stage Does This Fail?</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:12px;">Spring 2024 gave a grammar and asked which stage each expression fails at. Choices: Lexer, Parser, Type Error, Runtime Error, Valid</p>
+    <table class="info-table">
+      <tr><th>Expression</th><th>Fails At</th><th>Why</th></tr>
+      <tr><td><code>1 + 2</code></td><td style="color:var(--green)">Valid</td><td>Grammatically correct, type-correct, evaluates fine</td></tr>
+      <tr><td><code>1 + true</code></td><td style="color:var(--yellow)">Type Error</td><td>Parsed OK, but int + bool violates type rules</td></tr>
+      <tr><td><code>1 / 0</code></td><td style="color:var(--red)">Runtime Error</td><td>Type-checks OK but divides by zero at runtime</td></tr>
+      <tr><td><code>@#$</code></td><td style="color:var(--purple)">Lexer</td><td>@ not a valid token in the language</td></tr>
+      <tr><td><code>+ 1</code></td><td style="color:var(--blue)">Parser</td><td>Valid tokens but wrong grammar (missing left operand)</td></tr>
+    </table>
+  </div>
+</section>
+
+<!-- PROPERTY-BASED TESTING -->
+<section id="pbt" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,217,61,0.1);">🧪</div>
+    <div>
+      <div class="section-num">Topic 12</div>
+      <h2>Property-Based Testing</h2>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Unit Testing vs Property-Based Testing</h3>
+    <table class="info-table">
+      <tr><th></th><th>Unit Testing</th><th>Property-Based Testing</th></tr>
+      <tr><td>Tests</td><td>Specific input/output pairs</td><td>Properties that should hold for ALL inputs</td></tr>
+      <tr><td>Coverage</td><td>Only what you thought of</td><td>Random inputs find unexpected edge cases</td></tr>
+      <tr><td>Writing</td><td><code>assert(square(3) == 9)</code></td><td><code>∀x: square(x) ≥ 0</code></td></tr>
+    </table>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <h3>PBT Components</h3>
+      <ol style="padding-left:20px;color:#b8c8d8;font-size:14px;line-height:2;">
+        <li><strong style="color:var(--accent)">Property (Relation)</strong> — A function taking an input and returning bool. Must be true for all valid inputs.</li>
+        <li><strong style="color:var(--accent)">Generator</strong> — Generates random test inputs from the domain.</li>
+        <li><strong style="color:var(--accent)">Test runner</strong> — Applies the property to each generated input.</li>
+      </ol>
+    </div>
+    <div class="card">
+      <h3>Writing a Property</h3>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:#e6edf3;line-height:1.9;">
+        <span style="color:var(--muted)">// Property for 'reverse':</span><br>
+        <span style="color:var(--muted)">// reversing twice gives original</span><br>
+        let relation lst =<br>
+        &nbsp;&nbsp;reverse(reverse(lst)) = lst<br><br>
+        <span style="color:var(--muted)">// Property for 'sort':</span><br>
+        <span style="color:var(--muted)">// sorted list has same length</span><br>
+        let relation lst =<br>
+        &nbsp;&nbsp;length(sort(lst)) = length(lst)
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:4px;">
+    <h3>📝 Exam Pattern: PBT with a Buggy Function</h3>
+    <p style="font-size:14px;color:#b8c8d8;margin-bottom:12px;">Spring 2025 gave this buggy <code>mapip</code> function:</p>
+    <div style="font-family:'Space Mono',monospace;font-size:13px;color:#e6edf3;background:var(--code-bg);padding:14px;border-radius:6px;border:1px solid var(--border);line-height:1.9;">
+      fn mapip&lt;F: Fn(i32) -> i32&gt;(f: F, v: &amp;mut Vec&lt;i32&gt;) -> Vec&lt;i32&gt; {<br>
+      &nbsp;&nbsp;let mut r = v.clone(); <span style="color:var(--muted)">// bug: modifies clone, not v</span><br>
+      &nbsp;&nbsp;for mut item in &amp;mut r { *item = f(*item); }<br>
+      &nbsp;&nbsp;r<br>
+      }
+    </div>
+    <p style="font-size:14px;color:#b8c8d8;margin-top:12px;">Property p: "The Vec should remain the same length after mapip"</p>
+    <div class="highlight-box info" style="margin-top:10px;">
+      <strong>Question: Does property p catch the bug?</strong><br>
+      Answer: <strong>NO</strong>. The bug is that the original Vec <code>v</code> isn't modified (it modifies <code>r</code> instead), but the LENGTH of both remains the same. A better property: "v should be modified in-place" or "the returned Vec equals v after applying f to each element".
+    </div>
+  </div>
+
+  <div class="code-editor" style="margin-top:20px;">
+    <div class="editor-header">
+      <div class="editor-dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+      <span class="editor-lang">PBT Simulator (JavaScript)</span>
+      <div class="editor-actions">
+        <button class="btn btn-run" onclick="runPBT()">▶ Run 100 Tests</button>
+        <button class="btn btn-reset" onclick="resetPBT()">↺ Reset</button>
+      </div>
+    </div>
+    <textarea class="code-area" id="pbt-code">
+// Define the function under test
+function mySort(arr) {
+  return [...arr].sort((a, b) => a - b);
+}
+
+// Define properties to test
+const properties = [
+  {
+    name: "Same length after sort",
+    test: (arr) => mySort(arr).length === arr.length
+  },
+  {
+    name: "Output is sorted (each elem <= next)",
+    test: (arr) => {
+      const s = mySort(arr);
+      for (let i = 0; i < s.length - 1; i++)
+        if (s[i] > s[i+1]) return false;
+      return true;
+    }
+  },
+  {
+    name: "Same elements (sum preserved)",
+    test: (arr) => mySort(arr).reduce((a,b)=>a+b,0) === arr.reduce((a,b)=>a+b,0)
+  }
+];
+
+// Generator
+function generator(n) {
+  return Array.from({length: Math.floor(Math.random()*10)},
+    () => Math.floor(Math.random()*200 - 100));
+}
+    </textarea>
+    <div class="output-label">PBT RESULTS</div>
+    <div class="output-area" id="pbt-output">Press ▶ Run 100 Tests to begin property-based testing</div>
+  </div>
+</section>
+
+<!-- CHEAT SHEET -->
+<section id="cheatsheet" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(255,217,61,0.1);">📋</div>
+    <div>
+      <div class="section-num">Reference</div>
+      <h2>Cheat Sheet</h2>
+    </div>
+  </div>
+  <div class="highlight-box info" style="margin-bottom:20px;">This mirrors what you'd have on your exam reference sheet, plus additional important concepts.</div>
+  <div class="cheat-grid">
+    <div class="cheat-card">
+      <div class="cheat-card-header">OCaml — Lists & Pattern Matching</div>
+      <pre>
+(* Lists *)
+let lst = []
+let lst = [1; 2; 3; 4]
+(* :: (cons) type: 'a -> 'a list -> 'a list *)
+1 :: 2 :: 3 :: [] = [1; 2; 3]
+(* @ (append) type: 'a list -> 'a list -> 'a list *)
+[1;2;3] @ [4;5;6] = [1;2;3;4;5;6]
+
+(* variants *)
+type llist = Cons of int * llist | Nil
+Cons(1, Cons(2, Cons(3, Nil)))
+
+(* pattern matching *)
+match lst with
+| [] -> "empty"
+| x :: xs -> "head: " ^ string_of_int x
+
+(* Anonymous Functions *)
+(fun a b c -> a + b + c)
+
+(* Let expression *)
+let x = 3 + 4 in x * 2  (* = 14 *)
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">OCaml — Map, Fold, Filter</div>
+      <pre>
+(* map: ('a->'b) -> 'a list -> 'b list *)
+let rec map f l = match l with
+  | [] -> []
+  | x::xs -> (f x) :: (map f xs)
+
+(* fold_left: ('a->'b->'a) -> 'a -> 'b list -> 'a *)
+let rec fold_left f a l = match l with
+  | [] -> a
+  | x::xs -> fold_left f (f a x) xs
+
+(* fold_right: ('a->'b->'b) -> 'a list -> 'b -> 'b *)
+let rec fold_right f l a = match l with
+  | [] -> a
+  | x::xs -> f x (fold_right f xs a)
+
+(* Examples *)
+List.map (fun x -> x*2) [1;2;3] = [2;4;6]
+List.fold_left (+) 0 [1;2;3] = 6
+List.filter (fun x -> x > 2) [1;2;3;4] = [3;4]
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">Regex Quick Reference</div>
+      <pre>
+*     zero or more
++     one or more
+?     zero or one
+.     any character
+r1|r2 r1 or r2
+[abc] any char in set
+[^r1] anything except r1
+[a-z] range (any lowercase letter)
+{n}   exactly n repetitions
+{n,}  at least n
+{m,n} between m and n
+^     start of string
+$     end of string
+(r)   grouping
+
+Precedence: * + ? > concat > |
+
+Examples:
+[A-Z][a-z]+\d{4}   — "Smith2024"
+(ab)+              — "ab", "abab", ...
+[^aeiou]           — any consonant
+\d+\.\d+           — float like "3.14"
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">Lambda Calculus</div>
+      <pre>
+Grammar:
+  E → x | λx.E | E E | (E)
+
+Scope: λx.E — body extends to end or
+       until unmatched parenthesis
+
+Free vs Bound:
+  (λx.x a) b
+      ^       bound (x in λx body)
+         ^ ^  free (not in any λ)
+
+Alpha-equivalence:
+  (λx.x) ≡ (λy.y)  -- same semantics
+
+Beta reduction:
+  (λx.E1)E2 → E1[x := E2]
+  "substitute E2 for x in E1"
+
+Call-by-Name (Lazy): reduce outermost first
+Call-by-Value (Eager): reduce argument first
+
+Booleans:
+  true  = λx.λy.x
+  false = λx.λy.y
+  if B M N = B M N
+
+Y Combinator (recursion):
+  Y = λf.(λx.f(xx))(λx.f(xx))
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">Rust — Ownership & Borrowing</div>
+      <pre>
+Rules:
+  1. Every value has one owner
+  2. Only one owner at a time
+  3. Dropped when owner out of scope
+
+Move vs Copy:
+  Copy types: i32, bool, char, f64, tuples of Copy
+  Move types: String, Vec<T>, Box<T>, ...
+
+let x = String::from("hi");
+let y = x;  // x is MOVED, invalid now
+let z = y.clone();  // deep copy, both valid
+
+Borrowing:
+  &T     -- immutable reference (many OK)
+  &mut T -- mutable reference (exactly one)
+  Cannot have &mut and & at same time!
+
+fn foo(s: &String) { ... }  // borrows, doesn't own
+foo(&x);  // pass reference
+
+Lifetimes:
+  fn longest<'a>(x: &'a str, y: &'a str) -> &'a str
+  'a = "at least this long"
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">Garbage Collection</div>
+      <pre>
+Reference Counting:
+  - Each object has a ref count
+  - Increment when pointer added
+  - Decrement when pointer removed
+  - Free when count = 0
+  ✗ CANNOT handle cycles!
+
+Mark and Sweep:
+  Phase 1 (Mark):
+    - Start from root set (stack vars)
+    - Follow all pointers, mark reachable
+  Phase 2 (Sweep):
+    - Scan all heap objects
+    - Free anything NOT marked
+  ✓ CAN handle cycles!
+
+Key question: "Can X clean up cycles?"
+  Reference Counting: NO
+  Mark and Sweep: YES
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">FSM / NFA → DFA Algorithm</div>
+      <pre>
+NFA components: (Q, Σ, δ, q0, F)
+DFA: same but δ is total function
+
+ε-closure(S) = S ∪ all states reachable
+               by ε-transitions from S
+
+Subset Construction:
+  1. Start: ε-closure({q0}) = first DFA state
+  2. For each DFA state T, symbol a:
+     next = ε-closure(move(T, a))
+     where move(T,a) = all states NFA
+     goes to from T on 'a'
+  3. Add next to worklist if new
+  4. DFA state is accepting if it contains
+     ANY NFA accepting state
+  5. Add dead/trap state if needed
+
+Accepting string: starts in start state,
+follows transitions, ends in accept state
+      </pre>
+    </div>
+    <div class="cheat-card">
+      <div class="cheat-card-header">Key Concept True/False</div>
+      <pre>
+ALWAYS TRUE:
+✓ Every CFG language ⊇ Regular languages
+✓ Turing machines > FSMs in power
+✓ map can always be replaced by fold
+✓ (fun x->x+1) α-equiv to (fun y->y+1)
+✓ In Rust, variables immutable by default
+✓ If A<:B and B<:C then A<:C
+
+ALWAYS FALSE:
+✗ OCaml is dynamically typed (it's static!)
+✗ Every CFG can be represented by NFA
+✗ Anonymous functions can't be recursive
+✗ Soundness implies completeness
+✗ Safe Rust never has runtime errors
+✗ Fixing all logic bugs = secure program
+✗ HOF is specific to OCaml
+✗ PBT can't be used with unit testing
+      </pre>
+    </div>
+  </div>
+</section>
+
+<!-- PRACTICE QUIZ -->
+<section id="quiz" class="content-section">
+  <div class="section-header">
+    <div class="section-icon" style="background:rgba(192,132,252,0.1);">🧠</div>
+    <div>
+      <div class="section-num">Practice</div>
+      <h2>Practice Quiz <span class="score-badge" id="quiz-score">0 / 0</span></h2>
+    </div>
+  </div>
+  <p style="color:var(--muted);margin-bottom:24px;">These questions are modeled after actual CMSC330 final exam questions. Click an answer to check it.</p>
+  <div id="quiz-container"></div>
+</section>
+
+</div><!-- end #main -->
+
+<script>
+// ============================================================
+// NAVIGATION
+// ============================================================
+function showSection(id) {
+  // Hide all sections by clearing inline style and removing active class
+  document.querySelectorAll('.content-section').forEach(s => {
+    s.classList.remove('active');
+    s.style.display = '';
+  });
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  const sec = document.getElementById(id);
+  if (sec) {
+    sec.classList.add('active');
+  }
+  const nav = document.querySelector(`.nav-item[onclick="showSection('${id}')"]`);
+  if (nav) nav.classList.add('active');
+
+  window.scrollTo(0, 0);
+}
+
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ============================================================
+// SEARCH INDEX — maps section IDs to all searchable keywords
+// Includes topic name aliases, key terms, and code symbols
+// ============================================================
+const SEARCH_INDEX = {
+  regex: [
+    'regex', 'regular expression', 'regular expressions', 'pattern', 'matching',
+    'kleene', 'star', 'alternation', 'concatenation', 'quantifier',
+    'character class', 'bracket', 'wildcard', 'anchor', 'repetition',
+    'zero or more', 'one or more', 'optional', 'pipe', 'union',
+    'nfa', 'dfa', 'finite', 'language', 'string', 'symbol',
+    'permissions', 'ls -lh', 'drwxrwxrwx', 'tester', 'match',
+    'L*DS', 'OB', 'aeiou', 'digit', 'range', 'set', 'group',
+    'precedence', 'operator', 'expression'
+  ],
+  fsm: [
+    'fsm', 'finite state machine', 'finite automata', 'automaton',
+    'nfa', 'dfa', 'deterministic', 'nondeterministic',
+    'epsilon', 'epsilon closure', 'epsilon-closure', 'e-closure',
+    'subset construction', 'powerset', 'transition', 'transition function',
+    'start state', 'accept state', 'accepting state', 'final state',
+    'dead state', 'trap state', 'alphabet', 'delta',
+    'state', 'states', 'q0', 'reachable', 'move',
+    'nfa to dfa', 'nfa->dfa', 'nfa-dfa', 'conversion', 'algorithm'
+  ],
+  grammar: [
+    'grammar', 'cfg', 'context free', 'context-free',
+    'production', 'production rule', 'derivation', 'parse', 'parsing',
+    'parse tree', 'ast', 'abstract syntax tree',
+    'terminal', 'nonterminal', 'non-terminal', 'start symbol',
+    'ambiguous', 'ambiguity', 'leftmost', 'rightmost',
+    'bnf', 'backus naur', 'language', 'recursive',
+    'balanced parentheses', 'pushdown', 'chomsky',
+    'yields', 'epsilon production', 'nullable',
+    'regular language', 'pumping lemma'
+  ],
+  ocaml: [
+    'ocaml', 'let', 'let rec', 'rec', 'match', 'with',
+    'pattern matching', 'variant', 'type', 'type inference',
+    'static typing', 'statically typed', 'strongly typed',
+    'immutable', 'functional', 'anonymous function', 'fun',
+    'list', 'tuple', 'option', 'some', 'none',
+    'cons', '::', 'append', '@', 'head', 'tail',
+    'if then else', 'int', 'bool', 'float', 'char', 'string',
+    'unit', 'polymorphic', 'type variable', 'alpha',
+    'factorial', 'sum', 'abs', 'area', 'recursive',
+    'utop', 'compile', 'dune', 'ocamlc',
+    'binding', 'scope', 'closure', 'curry', 'currying'
+  ],
+  hof: [
+    'higher order', 'higher-order', 'hof',
+    'map', 'fold', 'fold_left', 'fold left', 'foldl',
+    'fold_right', 'fold right', 'foldr',
+    'filter', 'reduce', 'accumulate', 'first class',
+    'first-class', 'function composition', 'compose',
+    'lambda', 'anonymous', 'partial application',
+    'List.map', 'List.fold', 'List.filter',
+    'predicate', 'accumulator', 'apply', 'pipeline',
+    'double', 'sum', 'evens', 'odds', 'transform'
+  ],
+  lambda: [
+    'lambda', 'lambda calculus', 'lambda calc',
+    'beta reduction', 'beta-reduction', 'b-reduction',
+    'alpha equivalence', 'alpha-equivalence', 'alpha equiv',
+    'free variable', 'bound variable', 'free variables', 'bound variables',
+    'abstraction', 'application', 'substitution',
+    'call by name', 'call-by-name', 'lazy', 'lazy evaluation',
+    'call by value', 'call-by-value', 'eager', 'eager evaluation',
+    'normal form', 'beta normal', 'redex', 'turing complete',
+    'church', 'y combinator', 'recursion', 'encoding',
+    'scope', 'binding', 'rename', 'variable capture',
+    'lx', 'ly', 'lz'
+  ],
+  opsemantics: [
+    'operational semantics', 'op semantics', 'opsem',
+    'proof tree', 'inference rule', 'rule', 'premise', 'conclusion',
+    'judgment', 'turnstile', 'big step', 'small step',
+    'evaluation', 'evaluates to', 'reduces to',
+    'environment', 'store', 'context',
+    'short circuit', 'short-circuit', 'and', 'or',
+    'print', 'side effect', 'evaluation order',
+    'axiom', 'base case', 'inductive', 'derivation',
+    'len', 'length', 'semantics', 'formal', 'meaning'
+  ],
+  types: [
+    'type system', 'type checking', 'type checker', 'typing',
+    'static typing', 'dynamic typing', 'type inference',
+    'soundness', 'sound', 'completeness', 'complete',
+    'type error', 'well-typed', 'ill-typed',
+    'gamma', 'context', 'type environment', 'turnstile',
+    'judgment', 'type rule', 'typing rule',
+    'subtype', 'subtyping', 'polymorphism', 'generic',
+    'int', 'bool', 'arrow type', 'function type',
+    'if expression', 'let expression', 'application',
+    'hindley milner', 'hindley-milner', 'unification',
+    'rust type', 'rust types', 'unit type'
+  ],
+  rust: [
+    'rust', 'ownership', 'borrow', 'borrowing', 'borrow checker',
+    'lifetime', 'lifetimes', 'move', 'copy', 'clone',
+    'mutable', 'immutable', 'mut', 'reference', 'deref',
+    '&', '&mut', 'drop', 'scope', 'stack', 'heap',
+    'string', 'vec', 'box', 'rc', 'arc',
+    'dangling pointer', 'use after free', 'memory safety',
+    'systems programming', 'zero cost', 'fearless concurrency',
+    'fn', 'struct', 'impl', 'trait', 'enum',
+    'println', 'push_str', 'invalid', 'freed',
+    'copy type', 'move type', 'i32', 'bool',
+    'append_one', 'longest', 'lifetime annotation'
+  ],
+  gc: [
+    'garbage collection', 'garbage collector', 'gc',
+    'reference counting', 'ref count', 'refcount',
+    'mark and sweep', 'mark sweep', 'mark-and-sweep',
+    'memory management', 'heap', 'allocate', 'free', 'dealloc',
+    'memory leak', 'cycle', 'cyclic', 'circular reference',
+    'root', 'root set', 'reachable', 'unreachable',
+    'pointer', 'reference', 'count', 'increment', 'decrement',
+    'sweep', 'mark', 'collect', 'reclaim',
+    'python', 'java', 'manual memory', 'c++',
+    'linked list', 'cycle detection'
+  ],
+  interp: [
+    'interpreter', 'compiler', 'compilation',
+    'lexer', 'lexing', 'tokenizer', 'tokenize', 'token',
+    'parser', 'parsing', 'parse error', 'syntax error',
+    'ast', 'abstract syntax tree', 'evaluator', 'evaluate',
+    'pipeline', 'stage', 'phase',
+    'lex error', 'type error', 'runtime error',
+    'num', 'plus', 'operator', 'identifier', 'keyword',
+    'grammar', 'context free', 'well-formed',
+    'ocaml compiler', 'dune', 'build',
+    'at what stage', 'fails at', '1 + 2', '1 + true'
+  ],
+  pbt: [
+    'property based testing', 'property-based testing', 'pbt',
+    'quickcheck', 'hypothesis',
+    'property', 'relation', 'predicate', 'invariant',
+    'generator', 'generate', 'random', 'arbitrary',
+    'counterexample', 'shrink', 'shrinking',
+    'unit test', 'unit testing', 'test case',
+    'mapip', 'buggy', 'bug', 'coverage',
+    'forall', 'for all', 'universal',
+    'sort', 'reverse', 'length', 'same length',
+    'domain', 'codomain', 'input space', 'fuzzing'
+  ]
+};
+
+// Normalize a query string for fuzzy/alias matching:
+// lowercase, collapse whitespace, remove underscores and hyphens
+function normalizeQuery(q) {
+  return q.toLowerCase().replace(/[_\-]/g, ' ').replace(/\s+/g, ' ').trim();
+}
+
+function filterNav(val) {
+  const navItems = document.querySelectorAll('.nav-item[data-topic]');
+  const noResultsEl = document.getElementById('search-no-results');
+
+  // Empty query — restore all items
+  if (!val.trim()) {
+    navItems.forEach(item => item.style.display = 'block');
+    if (noResultsEl) noResultsEl.style.display = 'none';
+    return;
+  }
+
+  const query = normalizeQuery(val);
+
+  let anyVisible = false;
+
+  navItems.forEach(item => {
+    const sectionId = item.dataset.topic;
+    const keywords = SEARCH_INDEX[sectionId] || [];
+    const navText = normalizeQuery(item.textContent);
+
+    // Check if query matches any keyword (normalized), or the nav label itself
+    const matches =
+      navText.includes(query) ||
+      keywords.some(kw => normalizeQuery(kw).includes(query) || query.includes(normalizeQuery(kw)));
+
+    item.style.display = matches ? 'block' : 'none';
+    if (matches) anyVisible = true;
+  });
+
+  // Show/hide "No results found"
+  if (noResultsEl) {
+    noResultsEl.style.display = anyVisible ? 'none' : 'block';
+  }
+}
+
+// ============================================================
+// REGEX TESTER
+// ============================================================
+const regexDefaults = {
+  pattern: 'L*DS|[OB]{2}',
+  test: 'DS\nOBOB\nDOL\nLSBB\nOB\nabc'
+};
+function runRegex() {
+  const pat = document.getElementById('regex-pattern').value;
+  const tests = document.getElementById('regex-test').value.split('\n');
+  let output = 'Pattern: ^(' + pat + ')$  [full-string match]\n\n';
+  try {
+    const re = new RegExp('^(' + pat + ')$');
+    tests.forEach(t => {
+      if (!t.trim()) return;
+      const matched = re.test(t.trim());
+      output += (matched ? '✅ MATCH   ' : '❌ NO MATCH') + '  "' + t.trim() + '"';
+      if (!matched && pat === 'L*DS|[OB]{2}') {
+        const s = t.trim();
+        if (s === 'OBOB') output += '  ← [OB]{2} matches exactly 2 chars, not 4';
+        else if (s === 'DOL') output += '  ← D needs L*S before it (L*DS pattern)';
+        else if (s === 'LSBB') output += '  ← L*DS needs ...DS ending; BB has no D';
+      }
+      output += '\n';
+    });
+  } catch(e) { output = 'Invalid regex: ' + e.message; }
+  document.getElementById('regex-output').textContent = output || '(no input)';
+}
+function resetRegex() {
+  document.getElementById('regex-pattern').value = regexDefaults.pattern;
+  document.getElementById('regex-test').value = regexDefaults.test;
+  document.getElementById('regex-output').textContent = 'Click "Test" to check matches...';
+}
+
+// ============================================================
+// OCAML SIMULATOR (JS-based simulation)
+// ============================================================
+const ocamlDefault = `(* OCaml Basics: Let expressions, recursion, pattern matching *)
+
+(* Simple let binding *)
+let x = 3 + 4
+
+(* Function definition: area has type int -> int -> int *)
+let area l w = l * w
+
+(* if expression: BOTH branches must return same type *)
+let abs_val n = if n >= 0 then n else -n
+
+(* Recursive function *)
+let rec factorial n =
+  if n = 0 then 1
+  else n * factorial (n - 1)
+
+(* Pattern matching on a list *)
+let rec sum lst = match lst with
+  | [] -> 0
+  | x :: xs -> x + sum xs
+
+(* Variant type example *)
+(* type shape = Rect of int * int | Circ of float *)`;
+
+function runOCaml() {
+  const code = document.getElementById('ocaml-code').value;
+  let output = '▶ Simulating OCaml evaluation...\n\n';
+  // Simulate common patterns
+  const lines = code.split('\n').filter(l => l.trim() && !l.trim().startsWith('(*'));
+  output += 'Detected expressions:\n';
+  if (code.includes('let x = 3 + 4')) output += '  x : int = 7\n';
+  if (code.includes('let area')) output += '  area : int -> int -> int = <fun>\n';
+  if (code.includes('let abs_val')) output += '  abs_val : int -> int = <fun>\n';
+  if (code.includes('let rec factorial')) output += '  factorial : int -> int = <fun>\n  factorial 5 = 120\n  factorial 0 = 1\n';
+  if (code.includes('let rec sum')) output += '  sum : int list -> int = <fun>\n  sum [1;2;3] = 6\n';
+  output += '\n💡 Note: Run actual OCaml in utop for real evaluation.';
+  document.getElementById('ocaml-output').textContent = output;
+}
+function resetOCaml() {
+  document.getElementById('ocaml-code').value = ocamlDefault;
+  document.getElementById('ocaml-output').textContent = 'Press ▶ Run to evaluate';
+}
+
+// ============================================================
+// TYPE CHECK
+// ============================================================
+const typecheckDefault = `fun x ->
+  let (a, b) = x in
+  fun y ->
+    let a = (a+1, b > true) in
+    (a :: y)`;
+
+function runTypeCheck() {
+  const code = document.getElementById('typecheck-code').value;
+  let output = '';
+  if (code.includes('let (a, b) = x') && code.includes('a+1') && code.includes('b > true') && code.includes('a :: y')) {
+    output = `Type inference analysis:
+  x : (int * bool)           -- because a+1 needs int, b>true needs bool
+  a : int                    -- from (a,b) = x where x:(int*bool)
+  b : bool                   -- from (a,b) = x
+  a+1 : int                  -- int + int
+  b > true : bool            -- bool comparison
+  new a : (int * bool)       -- (a+1, b>true)
+  a :: y : (int * bool) list -- cons, so y : (int*bool) list
+
+Full type:
+  (int * bool) -> (int * bool) list -> (int * bool) list
+
+In OCaml notation:
+  int * bool -> (int * bool) list -> (int * bool) list`;
+  } else {
+    output = 'Type inference depends on the expression. Common patterns:\n  fun x -> x + 1  :  int -> int\n  fun x y -> x    :  \'a -> \'b -> \'a\n  fun x -> x :: [] :  \'a -> \'a list';
+  }
+  document.getElementById('typecheck-output').textContent = output;
+}
+function resetTypeCheck() {
+  document.getElementById('typecheck-code').value = typecheckDefault;
+  document.getElementById('typecheck-output').textContent = 'Enter OCaml expression and click "Infer Type"';
+}
+
+// ============================================================
+// HOF
+// ============================================================
+const hofDefault = `(* Try experimenting with higher-order functions *)
+
+(* map: double every element *)
+let doubled = List.map (fun x -> x * 2) [1; 2; 3; 4; 5]
+(* Result: [2; 4; 6; 8; 10] *)
+
+(* fold_left: sum a list *)
+let total = List.fold_left (fun acc x -> acc + x) 0 [1; 2; 3; 4; 5]
+(* Result: 15 *)
+
+(* filter: keep only evens *)
+let evens = List.filter (fun x -> x mod 2 = 0) [1; 2; 3; 4; 5; 6]
+(* Result: [2; 4; 6] *)
+
+(* Composing: sum of squares *)
+let sum_squares lst =
+  List.fold_left (+) 0 (List.map (fun x -> x * x) lst)
+(* sum_squares [1;2;3] = 14 *)`;
+
+function runHOF() {
+  const code = document.getElementById('hof-code').value;
+  let out = '▶ Simulating HOF evaluation:\n\n';
+  if (code.includes('map') && code.includes('x * 2') && code.includes('[1; 2; 3; 4; 5]')) out += '  doubled = [2; 4; 6; 8; 10]\n';
+  if (code.includes('fold_left') && code.includes('acc + x') && code.includes('[1; 2; 3; 4; 5]')) out += '  total = 15\n';
+  if (code.includes('filter') && code.includes('mod 2')) out += '  evens = [2; 4; 6]\n';
+  if (code.includes('sum_squares')) out += '  sum_squares [1;2;3] = 1+4+9 = 14\n  sum_squares [3;4;5] = 9+16+25 = 50\n';
+  if (out === '▶ Simulating HOF evaluation:\n\n') out += '  (modify code and re-run to see results)';
+  document.getElementById('hof-output').textContent = out;
+}
+function resetHOF() {
+  document.getElementById('hof-code').value = hofDefault;
+  document.getElementById('hof-output').textContent = 'Press ▶ Run to evaluate';
+}
+
+// ============================================================
+// TYPE PRACTICE
+// ============================================================
+const typepracticeDefault = `(* From Spring 2024 & Spring 2025 Final Exams *)
+(* What is the type of this expression? *)
+fun x ->
+  let (a, b) = x in
+  fun y ->
+    let a = (a+1, b > true) in
+    (a :: y)`;
+
+function runTypePractice() {
+  document.getElementById('typepractice-output').textContent = 
+`ANSWER: int * bool -> (int * bool) list -> (int * bool) list
+
+Reasoning step-by-step:
+  1. fun x -> ...
+     x is a tuple because we do "let (a,b) = x"
+  
+  2. let (a,b) = x:
+     a+1 → a must be int
+     b > true → b must be bool
+     So x : int * bool
+  
+  3. fun y -> ...:
+     new a = (a+1, b>true) : int * bool
+     a :: y means y : (int * bool) list
+     a :: y : (int * bool) list
+  
+  4. Full type:
+     (int * bool) -> (int * bool) list -> (int * bool) list
+
+This exact question appeared on Spring 2024 AND Spring 2025!`;
+}
+
+function resetTypePractice() {
+  document.getElementById('typepractice-code').value = typepracticeDefault;
+  document.getElementById('typepractice-output').textContent = 'Press ▶ Check Type to see the answer';
+}
+
+// ============================================================
+// RUST CHECKER
+// ============================================================
+const rustDefault = `fn main() {
+    // Example 1: This compiles! (i32 is Copy)
+    let x = 4;
+    let y = x;
+    println!("{x},{y}");  // both valid
+
+    // Example 2: Does this compile?
+    // let x = String::from("Hello");
+    // let y = x;  // x is MOVED
+    // println!("{x}");  // ERROR: x moved
+
+    // Example 3: Borrowing
+    // let mut x = String::from("Hello");
+    // let y = &x;   // immutable borrow
+    // x.push_str("!");  // ERROR: can't mutate while borrowed
+    // println!("{y}");
+}`;
+
+function runRust() {
+  const code = document.getElementById('rust-code').value;
+  let out = '🦀 Borrow Checker Analysis:\n\n';
+  const lines = code.split('\n');
+  const uncommented = lines.filter(l => !l.trim().startsWith('//'));
+  const full = uncommented.join('\n');
+  
+  // Check for common patterns
+  if (full.includes('let y = x') && !full.includes('String::from') && full.includes('let x = 4')) {
+    out += '✅ COMPILES — i32 is a Copy type. Both x and y are valid.\n';
+  }
+  if (full.includes('String::from') && full.includes('let y = x') && !full.includes('&x') && !full.includes('clone')) {
+    out += '❌ ERROR — String is a Move type. After "let y = x", x is moved and invalid.\n';
+    out += '   Fix: use "let y = x.clone();" or use a borrow "let y = &x;"\n';
+  }
+  if (full.includes('&mut x') && !full.includes('let mut x')) {
+    out += '❌ ERROR — Cannot take &mut x if x is not declared with "mut"\n';
+  }
+  if (full.includes('let y = &x') && full.includes('push_str')) {
+    out += '❌ ERROR — Cannot mutate x while y holds an immutable borrow.\n';
+    out += '   Fix: use y before calling push_str, or drop y first.\n';
+  }
+  if (out === '🦀 Borrow Checker Analysis:\n\n') {
+    out += '(No issues detected in uncommented code — this appears to compile OK)\n';
+  }
+  out += '\n💡 For real Rust, use: rustc file.rs or cargo build';
+  document.getElementById('rust-output').textContent = out;
+}
+function resetRust() {
+  document.getElementById('rust-code').value = rustDefault;
+  document.getElementById('rust-output').textContent = 'Press ▶ Compile Check to analyze';
+}
+
+// ============================================================
+// PBT
+// ============================================================
+const pbtDefault = `// Define the function under test
+function mySort(arr) {
+  return [...arr].sort((a, b) => a - b);
+}
+
+// Define properties to test
+const properties = [
+  {
+    name: "Same length after sort",
+    test: (arr) => mySort(arr).length === arr.length
+  },
+  {
+    name: "Output is sorted (each elem <= next)",
+    test: (arr) => {
+      const s = mySort(arr);
+      for (let i = 0; i < s.length - 1; i++)
+        if (s[i] > s[i+1]) return false;
+      return true;
+    }
+  },
+  {
+    name: "Same elements (sum preserved)",
+    test: (arr) => mySort(arr).reduce((a,b)=>a+b,0) === arr.reduce((a,b)=>a+b,0)
+  }
+];
+
+// Generator
+function generator(n) {
+  return Array.from({length: Math.floor(Math.random()*10)},
+    () => Math.floor(Math.random()*200 - 100));
+}`;
+
+function runPBT() {
+  try {
+    const code = document.getElementById('pbt-code').value;
+    const fn = new Function(code + `
+      const results = [];
+      for (let i = 0; i < 100; i++) {
+        const input = generator(i);
+        for (const p of properties) {
+          try {
+            const passed = p.test(input);
+            results.push({name: p.name, passed, input: JSON.stringify(input)});
+          } catch(e) {
+            results.push({name: p.name, passed: false, input: JSON.stringify(input), err: e.message});
+          }
+        }
+      }
+      return results;
+    `);
+    const results = fn();
+    const summary = {};
+    results.forEach(r => {
+      if (!summary[r.name]) summary[r.name] = {pass:0, fail:0, failEx: null};
+      if (r.passed) summary[r.name].pass++;
+      else { summary[r.name].fail++; if (!summary[r.name].failEx) summary[r.name].failEx = r.input; }
+    });
+    let out = '🧪 Property-Based Testing Results (100 random inputs each):\n\n';
+    for (const [name, res] of Object.entries(summary)) {
+      const icon = res.fail === 0 ? '✅' : '❌';
+      out += `${icon} "${name}"\n   Passed: ${res.pass}/100, Failed: ${res.fail}/100\n`;
+      if (res.failEx) out += `   Counterexample: ${res.failEx}\n`;
+      out += '\n';
+    }
+    document.getElementById('pbt-output').textContent = out;
+  } catch(e) {
+    document.getElementById('pbt-output').textContent = 'Error: ' + e.message;
+  }
+}
+function resetPBT() {
+  document.getElementById('pbt-code').value = pbtDefault;
+  document.getElementById('pbt-output').textContent = 'Press ▶ Run 100 Tests to begin property-based testing';
+}
+
+// ============================================================
+// SOLUTION REVEAL
+// ============================================================
+function showSolution(id) {
+  const el = document.getElementById(id);
+  el.style.display = el.style.display === 'none' ? 'block' : 'none';
+}
+
+// ============================================================
+// FSM DIAGRAM STEPPER
+// ============================================================
+let fsmCurrentStep = 0;
+const fsmSteps = [
+  {
+    desc: '<strong>Start:</strong> We have an NFA with states {0,1,2,3,4} and alphabet {a,b,c}. State 0 is start. State 4 accepts. First, compute ε-closure of the start state.',
+    draw: (svg) => {
+      drawNFABase(svg);
+      highlightState(svg, 0, '#4fffb0');
+    }
+  },
+  {
+    desc: '<strong>Step 1:</strong> ε-closure({0}) = {0,1} because there is an ε-transition from 0 → 1. This set {0,1} becomes <strong style="color:var(--accent)">DFA state S1</strong>.',
+    draw: (svg) => {
+      drawNFABase(svg);
+      highlightState(svg, 0, '#4fffb0');
+      highlightState(svg, 1, '#4fffb0');
+      drawLabel(svg, 350, 30, 'DFA S1 = {0,1}', '#4fffb0');
+    }
+  },
+  {
+    desc: '<strong>Step 2:</strong> From S1={0,1}, on input <strong>a</strong>: move({0,1}, a) = {2} (0→2 on a). ε-closure({2}) = {2,3} (ε from 2→3). New DFA state S2 = {2,3}.',
+    draw: (svg) => {
+      drawNFABase(svg);
+      highlightState(svg, 0, '#4fffb0');
+      highlightState(svg, 1, '#4fffb0');
+      highlightState(svg, 2, '#6bcbff');
+      highlightState(svg, 3, '#6bcbff');
+      drawLabel(svg, 350, 30, 'S1={0,1} →a→ S2={2,3}', '#6bcbff');
+    }
+  },
+  {
+    desc: '<strong>Step 3:</strong> From S2={2,3}, on input <strong>b</strong>: move({2,3}, b) = {4} (3→4 on b). ε-closure({4}) = {4}. New DFA state S3 = {4} — which is an ACCEPTING state!',
+    draw: (svg) => {
+      drawNFABase(svg);
+      highlightState(svg, 2, '#6bcbff');
+      highlightState(svg, 3, '#6bcbff');
+      highlightState(svg, 4, '#ff6b6b');
+      drawLabel(svg, 350, 30, 'S2={2,3} →b→ S3={4} ★ACCEPT', '#ff6b6b');
+    }
+  },
+  {
+    desc: '<strong>Step 4:</strong> Check all transitions from all DFA states. Any DFA state with no transition on a symbol gets a "dead" (trap) state. DFA states are accepting if they contain NFA accept state 4.',
+    draw: (svg) => {
+      drawNFABase(svg);
+      highlightState(svg, 0, '#4fffb0');
+      highlightState(svg, 1, '#4fffb0');
+      highlightState(svg, 2, '#6bcbff');
+      highlightState(svg, 3, '#6bcbff');
+      highlightState(svg, 4, '#ff6b6b');
+      drawLabel(svg, 350, 30, 'Building complete DFA...', '#ffd93d');
+    }
+  },
+  {
+    desc: '<strong>Complete DFA:</strong> S1={0,1} start; S2={2,3} on S1→a; S3={4} on S2→b (accepting). Any undefined transitions go to a dead/trap state. The DFA accepts strings like "ab".',
+    draw: (svg) => {
+      drawFinalDFA(svg);
+    }
+  },
+  {
+    desc: '<strong>Done!</strong> The NFA accepts the same language as the DFA. Key insight: DFA states are SETS of NFA states. A DFA state is accepting if it contains ANY NFA accepting state.',
+    draw: (svg) => {
+      drawFinalDFA(svg);
+      drawLabel(svg, 350, 30, '✓ NFA → DFA Conversion Complete', '#4fffb0');
+    }
+  }
+];
+
+function drawNFABase(svg) {
+  svg.innerHTML = '';
+  const positions = [[60,140],[160,80],[280,80],[380,140],[520,140]];
+  const labels = ['0','1','2','3','4'];
+  // Draw edges
+  const edges = [
+    [0,1,'ε'], [0,2,'a'], [1,3,'b'], [2,3,'ε'], [3,4,'c']
+  ];
+  edges.forEach(([f,t,lbl]) => {
+    const [x1,y1] = positions[f];
+    const [x2,y2] = positions[t];
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1); line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2); line.setAttribute('y2',y2);
+    line.setAttribute('stroke','#2a3a5c'); line.setAttribute('stroke-width','2');
+    line.setAttribute('marker-end','url(#arrow)');
+    svg.appendChild(line);
+    const tx = document.createElementNS('http://www.w3.org/2000/svg','text');
+    tx.setAttribute('x',(x1+x2)/2); tx.setAttribute('y',(y1+y2)/2-8);
+    tx.setAttribute('fill','#7a8fad'); tx.setAttribute('font-size','13');
+    tx.setAttribute('text-anchor','middle');
+    tx.textContent = lbl;
+    svg.appendChild(tx);
+  });
+  // Draw states
+  positions.forEach(([x,y],i) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',24);
+    c.setAttribute('fill','#111827'); c.setAttribute('stroke','#2a3a5c'); c.setAttribute('stroke-width','2');
+    c.setAttribute('id','fsm-n'+i);
+    svg.appendChild(c);
+    if(i===4) { // accepting double ring
+      const c2 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c2.setAttribute('cx',x); c2.setAttribute('cy',y); c2.setAttribute('r',18);
+      c2.setAttribute('fill','none'); c2.setAttribute('stroke','#2a3a5c'); c2.setAttribute('stroke-width','1.5');
+      svg.appendChild(c2);
+    }
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',x); t.setAttribute('y',y+5);
+    t.setAttribute('fill','#e8edf5'); t.setAttribute('font-size','14');
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-weight','bold');
+    t.textContent = labels[i];
+    svg.appendChild(t);
+  });
+  // Arrow marker
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML = `<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#2a3a5c"/></marker>`;
+  svg.insertBefore(defs, svg.firstChild);
+  // Start arrow
+  const arr = document.createElementNS('http://www.w3.org/2000/svg','line');
+  arr.setAttribute('x1',20); arr.setAttribute('y1',140); arr.setAttribute('x2',34); arr.setAttribute('y2',140);
+  arr.setAttribute('stroke','#4fffb0'); arr.setAttribute('stroke-width','2'); arr.setAttribute('marker-end','url(#arrow)');
+  svg.appendChild(arr);
+  drawLabel(svg, 350, 230, 'NFA states: 0=start, 4=accept', '#7a8fad');
+}
+
+function highlightState(svg, idx, color) {
+  const positions = [[60,140],[160,80],[280,80],[380,140],[520,140]];
+  const [x,y] = positions[idx];
+  const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+  c.setAttribute('cx',x); c.setAttribute('cy',y); c.setAttribute('r',26);
+  c.setAttribute('fill','none'); c.setAttribute('stroke',color); c.setAttribute('stroke-width','3');
+  svg.appendChild(c);
+}
+
+function drawLabel(svg, x, y, text, color) {
+  const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+  t.setAttribute('x',x); t.setAttribute('y',y);
+  t.setAttribute('fill',color); t.setAttribute('font-size','13');
+  t.setAttribute('text-anchor','middle'); t.setAttribute('font-weight','600');
+  t.setAttribute('font-family','Space Mono, monospace');
+  t.textContent = text;
+  svg.appendChild(t);
+}
+
+function drawFinalDFA(svg) {
+  svg.innerHTML = '';
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML = `<marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto"><polygon points="0 0, 10 3.5, 0 7" fill="#4fffb0"/></marker>`;
+  svg.appendChild(defs);
+  // DFA: S1→(a)→S2→(b)→S3 (accept)
+  const states = [{x:120,y:140,lbl:'S1\n{0,1}',acc:false},{x:320,y:140,lbl:'S2\n{2,3}',acc:false},{x:520,y:140,lbl:'S3\n{4}',acc:true}];
+  states.forEach((s,i) => {
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',s.x); c.setAttribute('cy',s.y); c.setAttribute('r',36);
+    c.setAttribute('fill',s.acc?'rgba(79,255,176,0.1)':'#111827');
+    c.setAttribute('stroke',s.acc?'#4fffb0':'#2a3a5c'); c.setAttribute('stroke-width','2');
+    svg.appendChild(c);
+    if(s.acc) {
+      const c2 = document.createElementNS('http://www.w3.org/2000/svg','circle');
+      c2.setAttribute('cx',s.x); c2.setAttribute('cy',s.y); c2.setAttribute('r',28);
+      c2.setAttribute('fill','none'); c2.setAttribute('stroke','#4fffb0'); c2.setAttribute('stroke-width','1.5');
+      svg.appendChild(c2);
+    }
+    const lines = s.lbl.split('\n');
+    lines.forEach((line, li) => {
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',s.x); t.setAttribute('y',s.y + (li-0.3)*16);
+      t.setAttribute('fill',s.acc?'#4fffb0':'#e8edf5'); t.setAttribute('font-size','12');
+      t.setAttribute('text-anchor','middle'); t.setAttribute('font-weight','bold');
+      t.textContent = line;
+      svg.appendChild(t);
+    });
+  });
+  // Edges
+  function drawEdge(x1,y1,x2,y2,lbl,col) {
+    const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+    line.setAttribute('x1',x1+36); line.setAttribute('y1',y1);
+    line.setAttribute('x2',x2-36); line.setAttribute('y2',y2);
+    line.setAttribute('stroke',col||'#4fffb0'); line.setAttribute('stroke-width','2');
+    line.setAttribute('marker-end','url(#arrow)');
+    svg.appendChild(line);
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',(x1+x2)/2); t.setAttribute('y',y1-12);
+    t.setAttribute('fill','#ffd93d'); t.setAttribute('font-size','13');
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-family','Space Mono');
+    t.textContent = lbl;
+    svg.appendChild(t);
+  }
+  drawEdge(120,140,320,140,'a');
+  drawEdge(320,140,520,140,'b');
+  // start arrow
+  const arr = document.createElementNS('http://www.w3.org/2000/svg','line');
+  arr.setAttribute('x1',60); arr.setAttribute('y1',140); arr.setAttribute('x2',82); arr.setAttribute('y2',140);
+  arr.setAttribute('stroke','#4fffb0'); arr.setAttribute('stroke-width','2'); arr.setAttribute('marker-end','url(#arrow)');
+  svg.appendChild(arr);
+  drawLabel(svg, 350, 230, 'DFA: accepts language "ab" (and paths through)', '#4fffb0');
+}
+
+function fsmStep(dir) {
+  fsmCurrentStep = Math.max(0, Math.min(fsmSteps.length-1, fsmCurrentStep + dir));
+  const svg = document.getElementById('fsm-svg');
+  fsmSteps[fsmCurrentStep].draw(svg);
+  document.getElementById('fsm-desc').innerHTML = fsmSteps[fsmCurrentStep].desc;
+  document.getElementById('fsm-counter').textContent = `Step ${fsmCurrentStep+1} / ${fsmSteps.length}`;
+  document.getElementById('fsm-prev').disabled = fsmCurrentStep === 0;
+  document.getElementById('fsm-next').disabled = fsmCurrentStep === fsmSteps.length-1;
+}
+
+// ============================================================
+// CFG Parse Tree Stepper
+// ============================================================
+let cfgCurrentStep = 0;
+const cfgSteps = [
+  {
+    desc: '<strong>Start:</strong> We want to parse "3 + 4 * 2" using grammar: E → E + T | T, T → T * F | F, F → num. Start with the Start symbol E.',
+    content: `<text x="350" y="50" fill="#e8edf5" font-size="15" text-anchor="middle" font-weight="bold">E</text>`
+  },
+  {
+    desc: '<strong>Apply E → E + T:</strong> The top-level is an addition. The left E will handle "3", the + is a terminal, and T handles "4 * 2".',
+    content: `<text x="220" y="50" fill="#4fffb0" font-size="15" text-anchor="middle" font-weight="bold">E</text>
+<line x1="220" y1="58" x2="140" y2="100" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="58" x2="220" y2="100" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="58" x2="350" y2="100" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="140" y="115" fill="#6bcbff" font-size="14" text-anchor="middle">E</text>
+<text x="220" y="115" fill="#ffd93d" font-size="14" text-anchor="middle">+</text>
+<text x="350" y="115" fill="#6bcbff" font-size="14" text-anchor="middle">T</text>`
+  },
+  {
+    desc: '<strong>Apply T → T * F:</strong> The right T handles multiplication. Left T handles "4", * is terminal, right F handles "2".',
+    content: `<text x="220" y="50" fill="#4fffb0" font-size="13" text-anchor="middle" font-weight="bold">E</text>
+<line x1="220" y1="58" x2="140" y2="90" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="58" x2="220" y2="90" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="58" x2="420" y2="90" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="140" y="103" fill="#6bcbff" font-size="12" text-anchor="middle">E</text>
+<text x="220" y="103" fill="#ffd93d" font-size="12" text-anchor="middle">+</text>
+<text x="420" y="103" fill="#4fffb0" font-size="12" text-anchor="middle">T</text>
+<line x1="420" y1="111" x2="360" y2="145" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="420" y1="111" x2="420" y2="145" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="420" y1="111" x2="540" y2="145" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="360" y="158" fill="#6bcbff" font-size="12" text-anchor="middle">T</text>
+<text x="420" y="158" fill="#ffd93d" font-size="12" text-anchor="middle">*</text>
+<text x="540" y="158" fill="#6bcbff" font-size="12" text-anchor="middle">F</text>`
+  },
+  {
+    desc: '<strong>Apply E → T → F → num:</strong> The left E reduces all the way to the terminal number "3".',
+    content: `<text x="220" y="32" fill="#4fffb0" font-size="11" text-anchor="middle" font-weight="bold">E</text>
+<line x1="220" y1="38" x2="140" y2="68" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="38" x2="220" y2="68" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="220" y1="38" x2="420" y2="68" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="140" y="80" fill="#6bcbff" font-size="11" text-anchor="middle">E→T→F</text>
+<text x="220" y="80" fill="#ffd93d" font-size="11" text-anchor="middle">+</text>
+<text x="420" y="80" fill="#4fffb0" font-size="11" text-anchor="middle">T</text>
+<line x1="140" y1="86" x2="140" y2="116" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="140" y="128" fill="#ff6b6b" font-size="13" text-anchor="middle" font-weight="bold">3</text>
+<line x1="420" y1="86" x2="360" y2="116" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="420" y1="86" x2="420" y2="116" stroke="#2a3a5c" stroke-width="1.5"/>
+<line x1="420" y1="86" x2="540" y2="116" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="360" y="128" fill="#6bcbff" font-size="11" text-anchor="middle">T→F</text>
+<text x="420" y="128" fill="#ffd93d" font-size="11" text-anchor="middle">*</text>
+<text x="540" y="128" fill="#6bcbff" font-size="11" text-anchor="middle">F</text>
+<line x1="360" y1="133" x2="360" y2="158" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="360" y="170" fill="#ff6b6b" font-size="13" text-anchor="middle" font-weight="bold">4</text>
+<line x1="540" y1="133" x2="540" y2="158" stroke="#2a3a5c" stroke-width="1.5"/>
+<text x="540" y="170" fill="#ff6b6b" font-size="13" text-anchor="middle" font-weight="bold">2</text>`
+  },
+  {
+    desc: '<strong>Complete Parse Tree!</strong> The tree shows that "3 + 4 * 2" is parsed as "3 + (4 * 2)" — multiplication has higher precedence because T is deeper in the tree than +. Grammar encodes precedence!',
+    content: `<text x="350" y="28" fill="#4fffb0" font-size="13" text-anchor="middle" font-weight="bold">Result: 3 + (4 * 2) = 11  ✓ Grammar encodes precedence!</text>
+<text x="140" y="80" fill="#ff6b6b" font-size="20" text-anchor="middle" font-weight="bold">3</text>
+<text x="280" y="80" fill="#ffd93d" font-size="20" text-anchor="middle" font-weight="bold">+</text>
+<text x="360" y="80" fill="#4fffb0" font-size="20" text-anchor="middle" font-weight="bold">(</text>
+<text x="430" y="80" fill="#ff6b6b" font-size="20" text-anchor="middle" font-weight="bold">4</text>
+<text x="490" y="80" fill="#ffd93d" font-size="20" text-anchor="middle" font-weight="bold">*</text>
+<text x="560" y="80" fill="#ff6b6b" font-size="20" text-anchor="middle" font-weight="bold">2</text>
+<text x="600" y="80" fill="#4fffb0" font-size="20" text-anchor="middle" font-weight="bold">)</text>`
+  }
+];
+
+function cfgStep(dir) {
+  cfgCurrentStep = Math.max(0, Math.min(cfgSteps.length-1, cfgCurrentStep + dir));
+  const svg = document.getElementById('cfg-svg');
+  svg.innerHTML = `<defs><marker id="arrow2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#2a3a5c"/></marker></defs>` + cfgSteps[cfgCurrentStep].content;
+  document.getElementById('cfg-desc').innerHTML = cfgSteps[cfgCurrentStep].desc;
+  document.getElementById('cfg-counter').textContent = `Step ${cfgCurrentStep+1} / ${cfgSteps.length}`;
+  document.getElementById('cfg-prev').disabled = cfgCurrentStep === 0;
+  document.getElementById('cfg-next').disabled = cfgCurrentStep === cfgSteps.length-1;
+}
+
+// ============================================================
+// LAMBDA STEPPER
+// ============================================================
+let lambdaCurrentStep = 0;
+const lambdaSteps = [
+  {
+    expr: '(λx.x x)((λy.y) a)',
+    desc: '<strong>Start:</strong> We have the expression (λx.x x)((λy.y) a). We need to do beta reduction. In Call-by-Value (eager): reduce the argument first. The argument is (λy.y) a.',
+    highlight: 'arg'
+  },
+  {
+    expr: '(λx.x x)(a)',
+    desc: '<strong>Step 1 (Eager):</strong> Reduce the argument: (λy.y) a → substitute a for y in body y → <strong style="color:var(--green)">a</strong>. Now argument is just "a".',
+    highlight: 'full'
+  },
+  {
+    expr: '(a)(a) = a a',
+    desc: '<strong>Step 2:</strong> Now apply the outer lambda: (λx.x x)(a) → substitute a for x in body (x x) → <strong style="color:var(--green)">a a</strong>.',
+    highlight: 'result'
+  },
+  {
+    expr: 'a a',
+    desc: '<strong>Beta Normal Form!</strong> "a a" cannot be reduced further (a is a free variable, not a lambda). In Call-by-Name (lazy), we would have substituted first and gotten the same result here.',
+    highlight: 'done'
+  },
+  {
+    expr: 'Result: a a (Normal Form)',
+    desc: '<strong>Summary of Call-by-Name vs Call-by-Value:</strong><br>• <strong style="color:var(--blue)">Call-by-Name (Lazy):</strong> substitute arg without evaluating → (a a) directly<br>• <strong style="color:var(--yellow)">Call-by-Value (Eager):</strong> evaluate arg first → a, then substitute → same result here',
+    highlight: 'summary'
+  }
+];
+
+function lambdaStep(dir) {
+  lambdaCurrentStep = Math.max(0, Math.min(lambdaSteps.length-1, lambdaCurrentStep + dir));
+  const step = lambdaSteps[lambdaCurrentStep];
+  const colors = { arg:'#ffd93d', full:'#6bcbff', result:'#4fffb0', done:'#4fffb0', summary:'#c084fc' };
+  const color = colors[step.highlight] || '#e8edf5';
+  document.getElementById('lambda-body').innerHTML = `
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-family:'Space Mono',monospace;font-size:20px;color:${color};padding:16px;background:var(--code-bg);border-radius:6px;border:1px solid var(--border);display:inline-block;">${step.expr}</div>
+    </div>`;
+  document.getElementById('lambda-counter').textContent = `Step ${lambdaCurrentStep+1} / ${lambdaSteps.length}`;
+  document.querySelector('#lambda-body').insertAdjacentHTML('beforeend',
+    `<div class="step-description">${step.desc}</div>`);
+  document.getElementById('lambda-prev').disabled = lambdaCurrentStep === 0;
+  document.getElementById('lambda-next').disabled = lambdaCurrentStep === lambdaSteps.length-1;
+}
+
+// ============================================================
+// OPERATIONAL SEMANTICS STEPPER
+// ============================================================
+let opsCurrentStep = 0;
+const opsSteps = [
+  {
+    desc: '<strong>Goal:</strong> Prove that len([1,2]) ⇒ 2 using the operational semantics rules. We build a proof tree from the bottom up.',
+    html: `<div style="color:var(--muted);font-size:13px;text-align:center;">Goal: <span style="color:var(--accent3)">len([1,2]) ⇒ 2</span></div>`
+  },
+  {
+    desc: '<strong>Step 1:</strong> First, use the rule for lists: [1,2] ⇒ 1 :: [2]. We apply the definition of list syntax.',
+    html: `<div style="text-align:center;">
+      <div style="color:var(--muted);font-size:12px;border-bottom:2px solid var(--border);padding:8px;margin-bottom:4px;">[1,2] ⇒ 1 :: [2] &nbsp;&nbsp;(list rule)</div>
+      <div style="color:var(--accent3);font-size:13px;padding:8px;">len([1,2]) ...</div>
+    </div>`
+  },
+  {
+    desc: '<strong>Step 2:</strong> Apply the len rule: if v ⇒ h :: t and len(t) ⇒ l and n = l+1, then len(v) ⇒ n. Our h=1, t=[2]. Now we need len([2]) ⇒ ?',
+    html: `<div style="text-align:center;">
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--blue);border-bottom:2px solid var(--border);padding:8px;margin-bottom:4px;">v⇒1::[2] &nbsp; len([2])⇒? &nbsp; n=?+1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent3);padding:8px;">len([1,2]) ⇒ n</div>
+    </div>`
+  },
+  {
+    desc: '<strong>Step 3:</strong> We need len([2]) ⇒ 1. Apply len rule again: [2] ⇒ 2 :: [], len([]) ⇒ 0, n = 0+1 = 1.',
+    html: `<div style="text-align:center;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--green);border-bottom:2px solid var(--border);padding:8px;margin-bottom:4px;">[2]⇒2::[] &nbsp; len([])⇒0 &nbsp; 1=0+1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--blue);border-bottom:2px solid var(--border);padding:8px;margin-bottom:4px;">v⇒1::[2] &nbsp; len([2])⇒1 &nbsp; n=1+1=2</div>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent3);padding:8px;">len([1,2]) ⇒ 2</div>
+    </div>`
+  },
+  {
+    desc: '<strong>Step 4:</strong> Now substitute: len([]) ⇒ 0 is an axiom (base case). No premises needed.',
+    html: `<div style="text-align:center;">
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);border-bottom:2px solid var(--border);padding:6px;margin-bottom:4px;">(base case axiom)</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--green);border-bottom:2px solid var(--border);padding:6px;margin-bottom:4px;">len([])⇒0 &nbsp;&nbsp; 1=0+1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:11px;color:var(--blue);border-bottom:2px solid var(--border);padding:6px;margin-bottom:4px;">len([2])⇒1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:12px;color:var(--blue);border-bottom:2px solid var(--border);padding:6px;margin-bottom:4px;">v⇒1::[2] &nbsp; 2=1+1</div>
+      <div style="font-family:'Space Mono',monospace;font-size:13px;color:var(--accent3);padding:8px;">len([1,2]) ⇒ 2 ✓</div>
+    </div>`
+  },
+  {
+    desc: '<strong>Complete Proof Tree!</strong> We\'ve shown len([1,2]) ⇒ 2. Each step applies an inference rule. The tree grows downward; leaves are axioms, root is what we\'re proving.',
+    html: `<div style="text-align:center;font-family:'Space Mono',monospace;font-size:12px;line-height:2.5;">
+      <div style="color:var(--muted)">─────────── (axiom)</div>
+      <div style="color:var(--green)">len([])⇒0  ──────── (1=0+1)</div>
+      <div style="color:var(--blue)">─────────────────────── </div>
+      <div style="color:var(--blue)">len([2])⇒1  ───── (2=1+1)</div>
+      <div style="color:var(--accent)">──────────────────────────────</div>
+      <div style="color:var(--accent3)">len([1,2]) ⇒ 2 &nbsp;✓</div>
+    </div>`
+  }
+];
+
+function opsStep(dir) {
+  opsCurrentStep = Math.max(0, Math.min(opsSteps.length-1, opsCurrentStep + dir));
+  document.getElementById('ops-diagram').innerHTML = opsSteps[opsCurrentStep].html;
+  document.getElementById('ops-desc').innerHTML = opsSteps[opsCurrentStep].desc;
+  document.getElementById('ops-counter').textContent = `Step ${opsCurrentStep+1} / ${opsSteps.length}`;
+  document.getElementById('ops-prev').disabled = opsCurrentStep === 0;
+  document.getElementById('ops-next').disabled = opsCurrentStep === opsSteps.length-1;
+}
+
+// ============================================================
+// RUST OWNERSHIP STEPPER
+// ============================================================
+let rustCurrentStep = 0;
+const rustSteps = [
+  {
+    desc: '<strong>Start:</strong> We create a String value "Hello" on the heap. The variable x is the OWNER.',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'x',owns:'Hello',valid:true}], [], []);
+    }
+  },
+  {
+    desc: '<strong>Move:</strong> let y = x; — String is NOT Copy. Ownership MOVES from x to y. x becomes INVALID.',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'x',owns:null,valid:false},{var:'y',owns:'Hello',valid:true}], ['MOVED'], []);
+    }
+  },
+  {
+    desc: '<strong>Borrow (immutable):</strong> let z = &y; — z is an IMMUTABLE reference. y is still valid. Both can read, neither can write.',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'y',owns:'Hello',valid:true},{var:'z',owns:'&y',valid:true,ref:true}], [], ['read only']);
+    }
+  },
+  {
+    desc: '<strong>Mutable Borrow:</strong> let a = &mut y; — EXACTLY ONE mutable reference allowed. y cannot be accessed while a exists.',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'y',owns:'Hello',valid:true,locked:true},{var:'a',owns:'&mut y',valid:true,mut:true}], [], ['can write']);
+    }
+  },
+  {
+    desc: '<strong>Drop:</strong> When a variable goes out of scope, it\'s DROPPED. If it owns heap data, that data is freed. This is how Rust avoids memory leaks!',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'y',owns:'(freed)',valid:false}], ['DROPPED'], ['memory freed']);
+    }
+  },
+  {
+    desc: '<strong>Copy types:</strong> i32, bool, etc. are COPIED on assignment. Both variables are valid. No ownership transfer!',
+    draw: (svg) => {
+      drawOwnershipDiagram(svg, [{var:'x',owns:'42 (i32)',valid:true},{var:'y',owns:'42 (copy)',valid:true}], ['COPY — both valid'], []);
+    }
+  }
+];
+
+function drawOwnershipDiagram(svg, vars, labels, notes) {
+  svg.innerHTML = '';
+  // Stack frame
+  const stackW = 200, stackH = 160, sx = 40, sy = 20;
+  const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  rect.setAttribute('x',sx); rect.setAttribute('y',sy); rect.setAttribute('width',stackW); rect.setAttribute('height',stackH);
+  rect.setAttribute('fill','#0d1117'); rect.setAttribute('stroke','#2a3a5c'); rect.setAttribute('stroke-width','2'); rect.setAttribute('rx','4');
+  svg.appendChild(rect);
+  const sl = document.createElementNS('http://www.w3.org/2000/svg','text');
+  sl.setAttribute('x',sx+stackW/2); sl.setAttribute('y',sy-6);
+  sl.setAttribute('fill','#7a8fad'); sl.setAttribute('font-size','11'); sl.setAttribute('text-anchor','middle');
+  sl.setAttribute('font-family','Space Mono');
+  sl.textContent = 'STACK';
+  svg.appendChild(sl);
+
+  // Heap
+  const heapW = 200, heapH = 160, hx = 420, hy = 20;
+  const hrect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+  hrect.setAttribute('x',hx); hrect.setAttribute('y',hy); hrect.setAttribute('width',heapW); hrect.setAttribute('height',heapH);
+  hrect.setAttribute('fill','#0d1117'); hrect.setAttribute('stroke','#2a3a5c'); hrect.setAttribute('stroke-width','2'); hrect.setAttribute('rx','4');
+  svg.appendChild(hrect);
+  const hl = document.createElementNS('http://www.w3.org/2000/svg','text');
+  hl.setAttribute('x',hx+heapW/2); hl.setAttribute('y',hy-6);
+  hl.setAttribute('fill','#7a8fad'); hl.setAttribute('font-size','11'); hl.setAttribute('text-anchor','middle');
+  hl.setAttribute('font-family','Space Mono');
+  hl.textContent = 'HEAP';
+  svg.appendChild(hl);
+
+  vars.forEach((v, i) => {
+    const y = sy + 30 + i * 44;
+    const color = !v.valid ? '#ff6b6b' : v.ref ? '#6bcbff' : v.mut ? '#ffd93d' : '#4fffb0';
+    // Stack var label
+    const vt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    vt.setAttribute('x',sx+16); vt.setAttribute('y',y+18);
+    vt.setAttribute('fill',color); vt.setAttribute('font-size','13'); vt.setAttribute('font-family','Space Mono');
+    vt.setAttribute('font-weight','bold');
+    vt.textContent = v.var + ':';
+    svg.appendChild(vt);
+    // Value box
+    const vbox = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    vbox.setAttribute('x',sx+60); vbox.setAttribute('y',y); vbox.setAttribute('width',120); vbox.setAttribute('height',28);
+    vbox.setAttribute('fill','transparent'); vbox.setAttribute('stroke',color); vbox.setAttribute('stroke-width','1.5'); vbox.setAttribute('rx','3');
+    svg.appendChild(vbox);
+    const vval = document.createElementNS('http://www.w3.org/2000/svg','text');
+    vval.setAttribute('x',sx+120); vval.setAttribute('y',y+18);
+    vval.setAttribute('fill',color); vval.setAttribute('font-size','11'); vval.setAttribute('font-family','Space Mono');
+    vval.setAttribute('text-anchor','middle');
+    vval.textContent = v.owns || '(invalid)';
+    svg.appendChild(vval);
+    // Arrow to heap for owners
+    if (v.owns && v.owns !== '(invalid)' && v.owns !== '(freed)' && !v.ref && !v.mut) {
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',sx+182); line.setAttribute('y1',y+14);
+      line.setAttribute('x2',hx); line.setAttribute('y2',hy+70+i*20);
+      line.setAttribute('stroke',color); line.setAttribute('stroke-width','1.5');
+      line.setAttribute('stroke-dasharray', v.valid ? 'none' : '5,3');
+      svg.appendChild(line);
+      // Heap data
+      const hd = document.createElementNS('http://www.w3.org/2000/svg','text');
+      hd.setAttribute('x',hx+16); hd.setAttribute('y',hy+80+i*20);
+      hd.setAttribute('fill',color); hd.setAttribute('font-size','12'); hd.setAttribute('font-family','Space Mono');
+      hd.textContent = '"' + v.owns + '"';
+      svg.appendChild(hd);
+    }
+  });
+
+  // Labels
+  labels.forEach((lbl, i) => {
+    const lt = document.createElementNS('http://www.w3.org/2000/svg','text');
+    lt.setAttribute('x',350); lt.setAttribute('y',50+i*20);
+    lt.setAttribute('fill','#ff6b6b'); lt.setAttribute('font-size','13');
+    lt.setAttribute('text-anchor','middle'); lt.setAttribute('font-family','Space Mono');
+    lt.setAttribute('font-weight','bold');
+    lt.textContent = lbl;
+    svg.appendChild(lt);
+  });
+}
+
+function rustStep(dir) {
+  rustCurrentStep = Math.max(0, Math.min(rustSteps.length-1, rustCurrentStep + dir));
+  const svg = document.getElementById('rust-svg');
+  rustSteps[rustCurrentStep].draw(svg);
+  document.getElementById('rust-desc').innerHTML = rustSteps[rustCurrentStep].desc;
+  document.getElementById('rust-counter').textContent = `Step ${rustCurrentStep+1} / ${rustSteps.length}`;
+  document.getElementById('rust-prev').disabled = rustCurrentStep === 0;
+  document.getElementById('rust-next').disabled = rustCurrentStep === rustSteps.length-1;
+}
+
+// ============================================================
+// GC REF COUNT STEPPER
+// ============================================================
+let gcCurrentStep = 0;
+const gcSteps = [
+  {
+    desc: '<strong>Start:</strong> We allocate object A on the heap. Variable v1 on the stack points to A. A\'s reference count = 1.',
+    draw: gcDraw(0)
+  },
+  {
+    desc: '<strong>Step 1:</strong> v2 = v1 (inside a block). Now TWO pointers (v1 and v2) point to A. A\'s reference count = 2.',
+    draw: gcDraw(1)
+  },
+  {
+    desc: '<strong>Step 2:</strong> Block ends, v2 goes out of scope. v2 is dropped. A\'s reference count decrements to 1. A is NOT freed yet.',
+    draw: gcDraw(2)
+  },
+  {
+    desc: '<strong>Step 3:</strong> Outer scope ends, v1 goes out of scope. A\'s count goes to 0. A is FREED! Memory reclaimed.',
+    draw: gcDraw(3)
+  },
+  {
+    desc: '<strong>⚠️ The Cycle Problem:</strong> If A → B and B → A (a cycle), even when unreachable, BOTH have count ≥ 1 and are NEVER freed! This is a memory leak. Reference counting CANNOT handle cycles.',
+    draw: gcDraw(4)
+  }
+];
+
+function gcDraw(step) {
+  return (svg) => {
+    svg.innerHTML = '';
+    const colors = ['#4fffb0','#6bcbff','#ffd93d','#ff6b6b','#c084fc'];
+    const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+    defs.innerHTML = `<marker id="gcarrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4fffb0"/></marker>
+    <marker id="gcarrow2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#ff6b6b"/></marker>`;
+    svg.appendChild(defs);
+    
+    const drawBox = (x,y,lbl,count,color,crossed) => {
+      const r = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r.setAttribute('x',x-40); r.setAttribute('y',y-20); r.setAttribute('width',80); r.setAttribute('height',40);
+      r.setAttribute('fill',crossed?'rgba(255,107,107,0.05)':'rgba(255,255,255,0.03)');
+      r.setAttribute('stroke',color); r.setAttribute('stroke-width','2'); r.setAttribute('rx','4');
+      svg.appendChild(r);
+      const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',x); t.setAttribute('y',y-4);
+      t.setAttribute('fill',color); t.setAttribute('font-size','12'); t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-family','Space Mono');
+      t.textContent = lbl;
+      svg.appendChild(t);
+      if (count !== null) {
+        const ct = document.createElementNS('http://www.w3.org/2000/svg','text');
+        ct.setAttribute('x',x); ct.setAttribute('y',y+12);
+        ct.setAttribute('fill','#7a8fad'); ct.setAttribute('font-size','10'); ct.setAttribute('text-anchor','middle');
+        ct.setAttribute('font-family','Space Mono');
+        ct.textContent = 'count: ' + count;
+        svg.appendChild(ct);
+      }
+      if (crossed) {
+        const x1=x-42,y1=y-22,x2=x+42,y2=y+22;
+        const xl = document.createElementNS('http://www.w3.org/2000/svg','line');
+        xl.setAttribute('x1',x1); xl.setAttribute('y1',y1); xl.setAttribute('x2',x2); xl.setAttribute('y2',y2);
+        xl.setAttribute('stroke','#ff6b6b'); xl.setAttribute('stroke-width','2');
+        svg.appendChild(xl);
+      }
+    };
+    
+    const drawArrow = (x1,y1,x2,y2,col) => {
+      const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+      l.setAttribute('x1',x1); l.setAttribute('y1',y1); l.setAttribute('x2',x2); l.setAttribute('y2',y2);
+      l.setAttribute('stroke',col||'#4fffb0'); l.setAttribute('stroke-width','2');
+      l.setAttribute('marker-end', col === '#ff6b6b' ? 'url(#gcarrow2)' : 'url(#gcarrow)');
+      svg.appendChild(l);
+    };
+    
+    if (step === 4) {
+      // Cycle problem
+      drawBox(160,110,'A (heap)',1,'#c084fc',false);
+      drawBox(420,110,'B (heap)',1,'#c084fc',false);
+      // cycle arrows
+      drawArrow(200,100,380,100,'#c084fc');
+      drawArrow(380,120,200,120,'#c084fc');
+      const warn = document.createElementNS('http://www.w3.org/2000/svg','text');
+      warn.setAttribute('x',350); warn.setAttribute('y',185);
+      warn.setAttribute('fill','#ff6b6b'); warn.setAttribute('font-size','13'); warn.setAttribute('text-anchor','middle');
+      warn.setAttribute('font-family','Space Mono');
+      warn.textContent = 'Cycle: counts never reach 0 → MEMORY LEAK!';
+      svg.appendChild(warn);
+      const warn2 = document.createElementNS('http://www.w3.org/2000/svg','text');
+      warn2.setAttribute('x',350); warn2.setAttribute('y',40);
+      warn2.setAttribute('fill','#ffd93d'); warn2.setAttribute('font-size','12'); warn2.setAttribute('text-anchor','middle');
+      warn2.textContent = 'Even if no stack variable points here, count ≥ 1';
+      svg.appendChild(warn2);
+      return;
+    }
+    
+    // Stack
+    const sl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    sl.setAttribute('x',90); sl.setAttribute('y',18);
+    sl.setAttribute('fill','#7a8fad'); sl.setAttribute('font-size','11'); sl.setAttribute('text-anchor','middle');
+    sl.setAttribute('font-family','Space Mono');
+    sl.textContent = 'STACK';
+    svg.appendChild(sl);
+    
+    const counts = [1,2,1,0];
+    const freed = step >= 3;
+    const v1Valid = step < 3;
+    const v2Valid = step === 1;
+    
+    if (v1Valid) {
+      drawBox(90, 80, 'v1', null, '#4fffb0', false);
+      drawArrow(132,80,310,80);
+    } else {
+      drawBox(90, 80, 'v1 (gone)', null, '#ff6b6b', true);
+    }
+    if (step >= 1) {
+      if (v2Valid) {
+        drawBox(90,140,'v2',null,'#6bcbff',false);
+        drawArrow(132,140,310,80,'#6bcbff');
+      } else if (step >= 2) {
+        drawBox(90,140,'v2 (gone)',null,'#ff6b6b',true);
+      }
+    }
+    
+    // Heap object A
+    const hl = document.createElementNS('http://www.w3.org/2000/svg','text');
+    hl.setAttribute('x',420); hl.setAttribute('y',18);
+    hl.setAttribute('fill','#7a8fad'); hl.setAttribute('font-size','11'); hl.setAttribute('text-anchor','middle');
+    hl.setAttribute('font-family','Space Mono');
+    hl.textContent = 'HEAP';
+    svg.appendChild(hl);
+    
+    drawBox(380, 80, freed ? 'A (FREED)' : 'A (heap)', counts[step], freed ? '#ff6b6b' : '#4fffb0', freed);
+  };
+}
+
+// Initialize GC steps to use draw functions
+gcSteps.forEach(s => { if (!s.draw || typeof s.draw !== 'function') {} });
+const gcStepFns = [gcDraw(0),gcDraw(1),gcDraw(2),gcDraw(3),gcDraw(4)];
+
+function gcStep(dir) {
+  gcCurrentStep = Math.max(0, Math.min(gcSteps.length-1, gcCurrentStep + dir));
+  gcStepFns[gcCurrentStep](document.getElementById('gc-svg'));
+  document.getElementById('gc-desc').innerHTML = gcSteps[gcCurrentStep].desc;
+  document.getElementById('gc-counter').textContent = `Step ${gcCurrentStep+1} / ${gcSteps.length}`;
+  document.getElementById('gc-prev').disabled = gcCurrentStep === 0;
+  document.getElementById('gc-next').disabled = gcCurrentStep === gcSteps.length-1;
+}
+
+// ============================================================
+// MARK AND SWEEP STEPPER
+// ============================================================
+let msCurrentStep = 0;
+const msStepDescs = [
+  '<strong>Start:</strong> The heap has 6 objects (A-F). The stack has references to A and C. Some objects reference each other.',
+  '<strong>Mark Phase begins:</strong> Start from root set (stack). A is reachable from stack. Mark A.',
+  '<strong>Mark Phase:</strong> Follow A\'s references. A → B and A → D. Mark B and D.',
+  '<strong>Mark Phase:</strong> Follow C (reachable from stack). C → E. Mark C and E. Note: F is referenced by E→F. Mark F. D has no more references.',
+  '<strong>Sweep Phase:</strong> Scan ALL heap objects. Any object NOT marked is unreachable. E is actually forming a cycle with F. D was only reachable through A.',
+  '<strong>Sweep Complete!</strong> Objects without marks (none in this example — all reachable) are freed. Key: even if A→D→A cycle existed, if A is still on stack, all remain reachable!'
+];
+
+function msDrawStep(step) {
+  const svg = document.getElementById('ms-svg');
+  svg.innerHTML = '';
+  const defs = document.createElementNS('http://www.w3.org/2000/svg','defs');
+  defs.innerHTML = `<marker id="msarrow" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#7a8fad"/></marker>
+  <marker id="msarrow2" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto"><polygon points="0 0, 8 3, 0 6" fill="#4fffb0"/></marker>`;
+  svg.appendChild(defs);
+  
+  const nodes = {
+    A: {x:200,y:80}, B:{x:120,y:160}, C:{x:350,y:80}, D:{x:280,y:160}, E:{x:450,y:160}, F:{x:580,y:80}
+  };
+  const edges = [['A','B'],['A','D'],['C','E'],['E','F']];
+  const stackRefs = ['A','C'];
+  const marked = [
+    [],
+    ['A'],
+    ['A','B','D'],
+    ['A','B','D','C','E','F'],
+    ['A','B','D','C','E','F'],
+    ['A','B','D','C','E','F']
+  ][step] || [];
+  
+  // Draw stack references
+  stackRefs.forEach((ref,i) => {
+    const nx = nodes[ref].x, ny = nodes[ref].y;
+    const sx = 30, sy = 50 + i*60;
+    const sr = document.createElementNS('http://www.w3.org/2000/svg','rect');
+    sr.setAttribute('x',sx-20); sr.setAttribute('y',sy-12); sr.setAttribute('width',50); sr.setAttribute('height',24);
+    sr.setAttribute('fill','#0d1117'); sr.setAttribute('stroke','#2a3a5c'); sr.setAttribute('stroke-width','1.5'); sr.setAttribute('rx','3');
+    svg.appendChild(sr);
+    const st = document.createElementNS('http://www.w3.org/2000/svg','text');
+    st.setAttribute('x',sx); st.setAttribute('y',sy+4);
+    st.setAttribute('fill','#7a8fad'); st.setAttribute('font-size','11'); st.setAttribute('text-anchor','middle');
+    st.setAttribute('font-family','Space Mono');
+    st.textContent = ref+'_var';
+    svg.appendChild(st);
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',sx+32); l.setAttribute('y1',sy);
+    l.setAttribute('x2',nx-22); l.setAttribute('y2',ny);
+    l.setAttribute('stroke',marked.includes(ref)?'#4fffb0':'#4fffb0'); l.setAttribute('stroke-width','1.5');
+    l.setAttribute('marker-end','url(#msarrow2)');
+    svg.appendChild(l);
+  });
+  
+  // Draw edges
+  edges.forEach(([f,t]) => {
+    const fn = nodes[f], tn = nodes[t];
+    const l = document.createElementNS('http://www.w3.org/2000/svg','line');
+    l.setAttribute('x1',fn.x+22); l.setAttribute('y1',fn.y);
+    l.setAttribute('x2',tn.x-22); l.setAttribute('y2',tn.y);
+    l.setAttribute('stroke',marked.includes(f)&&marked.includes(t)?'#4fffb0':'#2a3a5c'); l.setAttribute('stroke-width','1.5');
+    l.setAttribute('marker-end',marked.includes(f)&&marked.includes(t)?'url(#msarrow2)':'url(#msarrow)');
+    svg.appendChild(l);
+  });
+  
+  // Draw nodes
+  Object.entries(nodes).forEach(([name, pos]) => {
+    const isMarked = marked.includes(name);
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',pos.x); c.setAttribute('cy',pos.y); c.setAttribute('r',22);
+    c.setAttribute('fill',isMarked?'rgba(79,255,176,0.15)':'rgba(255,107,107,0.05)');
+    c.setAttribute('stroke',isMarked?'#4fffb0':'#ff6b6b'); c.setAttribute('stroke-width','2');
+    svg.appendChild(c);
+    const t = document.createElementNS('http://www.w3.org/2000/svg','text');
+    t.setAttribute('x',pos.x); t.setAttribute('y',pos.y+5);
+    t.setAttribute('fill',isMarked?'#4fffb0':'#ff6b6b'); t.setAttribute('font-size','14');
+    t.setAttribute('text-anchor','middle'); t.setAttribute('font-weight','bold');
+    t.setAttribute('font-family','Space Mono');
+    t.textContent = name;
+    svg.appendChild(t);
+    if (isMarked) {
+      const m = document.createElementNS('http://www.w3.org/2000/svg','text');
+      m.setAttribute('x',pos.x+18); m.setAttribute('y',pos.y-14);
+      m.setAttribute('fill','#4fffb0'); m.setAttribute('font-size','14');
+      m.textContent = '✓';
+      svg.appendChild(m);
+    }
+  });
+  
+  const legend = document.createElementNS('http://www.w3.org/2000/svg','text');
+  legend.setAttribute('x',350); legend.setAttribute('y',210);
+  legend.setAttribute('fill','#7a8fad'); legend.setAttribute('font-size','11'); legend.setAttribute('text-anchor','middle');
+  legend.setAttribute('font-family','Space Mono');
+  legend.textContent = step < 4 ? '🟢 marked = reachable  🔴 unmarked = potentially freeable' : '→ Sweep: free all unmarked objects';
+  svg.appendChild(legend);
+}
+
+function msStep(dir) {
+  msCurrentStep = Math.max(0, Math.min(msStepDescs.length-1, msCurrentStep + dir));
+  msDrawStep(msCurrentStep);
+  document.getElementById('ms-desc').innerHTML = msStepDescs[msCurrentStep];
+  document.getElementById('ms-counter').textContent = `Step ${msCurrentStep+1} / ${msStepDescs.length}`;
+  document.getElementById('ms-prev').disabled = msCurrentStep === 0;
+  document.getElementById('ms-next').disabled = msCurrentStep === msStepDescs.length-1;
+}
+
+// ============================================================
+// QUIZ
+// ============================================================
+const quizQuestions = [
+  {
+    q: 'True or False: OCaml is dynamically typed because it uses type inference.',
+    options: ['True', 'False'],
+    correct: 1,
+    explanation: 'FALSE. Type inference means the compiler DEDUCES types at compile time — this is still static typing. OCaml is statically and strongly typed.'
+  },
+  {
+    q: 'Which garbage collection algorithm can handle a cyclical linked list?',
+    options: ['Reference Counting', 'Mark and Sweep', 'Both', 'Neither'],
+    correct: 1,
+    explanation: 'Mark and Sweep can handle cycles because it traverses all reachable objects from roots — objects in cycles with no path from any root are NOT marked and get swept. Reference counting fails because cycle objects keep each other\'s count ≥ 1.'
+  },
+  {
+    q: 'What is the type of: (fun x -> x + 1) in OCaml?',
+    options: ['\'a -> \'a', 'int -> int', 'float -> float', 'int -> bool'],
+    correct: 1,
+    explanation: 'The + operator in OCaml works on ints, so x must be int and x+1 is int. Type: int -> int.'
+  },
+  {
+    q: 'In Rust, after: let x = String::from("hello"); let y = x; — which statement is true?',
+    options: ['Both x and y are valid', 'x is invalid (moved), y is valid', 'y is invalid, x is valid', 'Both are invalid'],
+    correct: 1,
+    explanation: 'String is not a Copy type, so assignment MOVES ownership. After "let y = x", x is moved into y. x becomes invalid. Only y is now valid.'
+  },
+  {
+    q: 'What does beta reduction of (λx.x y) a produce?',
+    options: ['x y', 'a y', 'y a', 'a a'],
+    correct: 1,
+    explanation: 'Beta reduction: (λx.E)v → E[x := v]. Here E = "x y", x := a. Substitute a for x: a y.'
+  },
+  {
+    q: 'Which of these is alpha-equivalent to (λx.xy)?',
+    options: ['(λy.yy)', '(λz.zy)', '(λw.xw)', '(λx.xx)'],
+    correct: 1,
+    explanation: '(λz.zy) — we renamed the bound variable x to z. The free variable y must remain y. (λy.yy) changed both x→y AND y→y, which changes semantics. (λw.xw) changed y→w (wrong). (λx.xx) changed y→x (wrong).'
+  },
+  {
+    q: 'At which stage does "@#$" fail when being processed by a compiler?',
+    options: ['Parser', 'Lexer', 'Type Checker', 'Runtime'],
+    correct: 1,
+    explanation: 'The lexer (tokenizer) fails because "@#$" contains characters that are not valid tokens in the language. The lexer cannot even identify valid tokens from this input.'
+  },
+  {
+    q: 'True or False: Every CFG can be represented by an NFA.',
+    options: ['True', 'False'],
+    correct: 1,
+    explanation: 'FALSE. CFGs describe context-free languages, which are a superset of regular languages. NFAs only recognize regular languages. For example, the language {aⁿbⁿ | n≥0} requires a CFG but cannot be described by any NFA/regex.'
+  },
+  {
+    q: 'What is a property in property-based testing?',
+    options: [
+      'A specific input-output pair to test',
+      'A function that takes input and returns true/false, expected to hold for all valid inputs',
+      'A randomly generated test case',
+      'A bug found during testing'
+    ],
+    correct: 1,
+    explanation: 'A property is a predicate (returns bool) that describes an invariant that should hold for all inputs in the domain. For example: "the length of a sorted list equals the original length".'
+  },
+  {
+    q: 'In OCaml, what happens if the two branches of an if expression have different types?',
+    options: [
+      'The expression returns the type of the true branch',
+      'A runtime error occurs',
+      'A compile-time type error occurs',
+      'OCaml coerces the types automatically'
+    ],
+    correct: 2,
+    explanation: 'OCaml is statically typed. If branches must have the same type. Mismatched types cause a compile-time type error — the program won\'t compile at all.'
+  }
+];
+
+let quizScores = {answered: 0, correct: 0};
+
+function buildQuiz() {
+  const container = document.getElementById('quiz-container');
+  container.innerHTML = '';
+  quizQuestions.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'quiz-question';
+    div.id = 'qq' + qi;
+    let optHtml = q.options.map((opt, oi) =>
+      `<div class="quiz-option" id="qo${qi}-${oi}" onclick="answerQuiz(${qi},${oi})">${String.fromCharCode(65+oi)}. ${opt}</div>`
+    ).join('');
+    div.innerHTML = `<p><strong style="color:var(--muted);font-family:'Space Mono',monospace;font-size:12px;">Q${qi+1}</strong> ${q.q}</p>${optHtml}
+    <div class="quiz-feedback" id="qf${qi}"></div>`;
+    container.appendChild(div);
+  });
+}
+
+function answerQuiz(qi, oi) {
+  const q = quizQuestions[qi];
+  const feedback = document.getElementById('qf'+qi);
+  if (feedback.classList.contains('show')) return; // already answered
+  
+  quizScores.answered++;
+  const opts = document.querySelectorAll(`[id^="qo${qi}-"]`);
+  opts.forEach(o => o.style.pointerEvents = 'none');
+  
+  if (oi === q.correct) {
+    document.getElementById(`qo${qi}-${oi}`).classList.add('correct');
+    feedback.className = 'quiz-feedback show correct';
+    feedback.innerHTML = '✅ Correct! ' + q.explanation;
+    quizScores.correct++;
+  } else {
+    document.getElementById(`qo${qi}-${oi}`).classList.add('wrong');
+    document.getElementById(`qo${qi}-${q.correct}`).classList.add('revealed');
+    feedback.className = 'quiz-feedback show wrong';
+    feedback.innerHTML = '❌ Incorrect. ' + q.explanation;
+  }
+  
+  document.getElementById('quiz-score').textContent = `${quizScores.correct} / ${quizScores.answered}`;
+}
+
+// ============================================================
+// INITIALIZATION
+// ============================================================
+window.addEventListener('load', () => {
+  fsmStep(0);
+  cfgStep(0);
+  lambdaStep(0);
+  opsStep(0);
+  rustStep(0);
+  gcStep(0);
+  msDrawStep(0);
+  document.getElementById('ms-desc').innerHTML = msStepDescs[0];
+  buildQuiz();
+});
+
+// Close sidebar on mobile when clicking outside
+document.getElementById('main').addEventListener('click', () => {
+  if (window.innerWidth <= 768) {
+    document.getElementById('sidebar').classList.remove('open');
+  }
+});
+</script>
+</body>
+</html>
