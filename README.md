@@ -93,6 +93,6 @@ Or view it directly on the Render link listed at the top of this page.
 
 ## Disclaimer
 
-- This webpage was generated based off of CMSC330 course notes using Claude Sonnet 4.6
+- This webpage was created based off of CMSC330 course notes using Claude Sonnet 4.6
 - This webpage should not be treated as a comprehensive study guide, but rather as a tool to assist you
 - This webpage may contain mistakes, review all information with caution
